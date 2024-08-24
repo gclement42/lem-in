@@ -42,6 +42,22 @@ char *get_room_name(char *line)
     return (name);
 }
 
+int count_n_links(char **data)
+{
+    int i;
+    int n_links;
+
+    i = 0;
+    n_links = 0;
+    while (data[i])
+    {
+        if (check_if_link(data[i]))
+            n_links++;
+        i++;
+    }
+    return (n_links);
+}
+
 int	open_map(char *map_path)
 {
 	int	fd;

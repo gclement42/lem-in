@@ -15,7 +15,7 @@ HEADER_FILE				= lem_in.h
 
 DIR						= src/
 SRC			 			= main.c \
-							parsing/parsing_manager.c\
+							parsing/get_data.c\
 							parsing/parsing_utils.c\
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)

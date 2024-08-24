@@ -107,7 +107,7 @@ int	open_map(char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0) {
-		ft_printf("Error: Could not open file %s\n", map_path);
+		ft_print_error("Error: Could not open file.\n");
         exit(EXIT_FAILURE);
     }
 	return (fd);

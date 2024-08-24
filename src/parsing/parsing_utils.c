@@ -21,6 +21,25 @@ bool check_if_room(char *line)
     return (false);
 }
 
+bool check_if_link(char *line)
+{
+    if (ft_strchr(line, '-') && line[0] != 'L' && line[0] != '#')
+        return (true);
+    return (false);
+}
+
+char *get_room_name(char *line)
+{
+    char *name;
+    int i;
+
+    i = 0;
+    while (line[i] != ' ')
+        i++;
+    name = ft_substr(line, 0, i);
+    return (name);
+}
+
 int	open_map(char *map_path)
 {
 	int	fd;
@@ -28,7 +47,7 @@ int	open_map(char *map_path)
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0) {
 		ft_printf("Error: Could not open file %s\n", map_path);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 	return (fd);
 }

@@ -28,6 +28,19 @@ bool check_if_link(char *line)
     return (false);
 }
 
+bool check_is_valid_link(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i] != '-')
+        i++;
+    ft_printf("i = %d\n", i);
+    if (line[i + 1] == '\0' || line[i + 1] == '\n')
+        return (false);
+    return (true);
+}
+
 char *get_room_name(char *line)
 {
     char *name;

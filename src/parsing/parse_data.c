@@ -1,19 +1,5 @@
 #include "lem_in.h"
 
-// static bool check_if_comment(char *line)
-// {
-//     if (line[0] == '#' && line[1] != '#')
-//         return (true);
-//     return (false);
-// }
-
-// static bool check_if_command(char *line)
-// {
-//     if (line[0] == '#' && line[1] == '#')
-//         return (true);
-//     return (false);
-// }
-
 static void init_lem_in(t_lem_in *lem_in, char *first_line)
 {
     lem_in->ants = ft_atoi(first_line);
@@ -23,13 +9,12 @@ static void init_lem_in(t_lem_in *lem_in, char *first_line)
     lem_in->rooms = NULL;
 }
 
-
-
 t_lem_in parse_data(char **data)
 {
     t_lem_in    lem_in;
 
     init_lem_in(&lem_in, data[0]);
+    
 
     return (lem_in);
 }

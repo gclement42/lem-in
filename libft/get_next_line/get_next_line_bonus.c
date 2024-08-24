@@ -41,7 +41,7 @@ char	*copy_line(char *str, int *bytes)
 	dest = NULL;
 	if (str == NULL)
 		return (NULL);
-	if (ft_strchr(str, '\n') != 0 || *bytes != BUFFER_SIZE)
+	if (ft_strchr_gnl(str, '\n') != 0 || *bytes != BUFFER_SIZE)
 	{
 		while (str[i] && str[i] != '\n')
 			i++;
@@ -89,7 +89,7 @@ char	*search_line(char *str, int fd, int *bytes)
 	if (str == NULL || fd < 0)
 		return (NULL);
 	while ((*bytes == BUFFER_SIZE || *bytes == -2)
-		&& ft_strchr(str, '\n') == 0)
+		&& ft_strchr_gnl(str, '\n') == 0)
 	{
 		str = read_and_join(str, fd, bytes);
 		if (str == NULL)
@@ -118,8 +118,8 @@ char	*get_next_line(int fd)
 	if (str == NULL)
 		return (NULL);
 	tmp = copy_line(str, &bytes);
-	if (ft_strchr(str, '\n') != 0 && str != NULL)
-		overflow[fd] = ft_strdup_gnl(ft_strchr(str, '\n'));
+	if (ft_strchr_gnl(str, '\n') != 0 && str != NULL)
+		overflow[fd] = ft_strdup_gnl(ft_strchr_gnl(str, '\n'));
 	else
 		overflow[fd] = NULL;
 	if (tmp[0] == '\0' || tmp == NULL)

@@ -22,7 +22,7 @@ size_t	ft_strlen_gnl(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char	*string, int searchCh)
+char	*ft_strchr_gnl(const char	*string, int searchCh)
 {
 	int	i;
 

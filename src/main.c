@@ -14,14 +14,14 @@ int main(int argc, char **argv)
 {
     t_lem_in lem_in;
     char **data;
-    (void)argc;
-    (void)argv;
 
     if (!check_arguments(argc, argv))
-        return (1);
+        return (EXIT_FAILURE);
     data = get_data(argv[1]);
     if (!data)
-        return (1);
+        return (EXIT_FAILURE);
     lem_in = parse_data(data);
-    return (0);
+    if (!lem_in)
+        return (EXIT_FAILURE);
+    return (EXIT_SUCCESS);
 }

@@ -7,7 +7,7 @@ typedef struct s_vector
 {
     int         x;
     int         y;
-} t_vector;
+}               t_vector;
 
 typedef struct s_room
 {
@@ -15,13 +15,13 @@ typedef struct s_room
     char        **links;
     bool        is_empty;
     t_vector    pos;
-} t_room;
+}               t_room;
 
 typedef struct s_ant
 {
     int         id;
     t_room      *room;
-} t_ant;
+}               t_ant;
 
 typedef struct s_lem_in
 {
@@ -31,6 +31,6 @@ typedef struct s_lem_in
     int         n_rooms;
 
     t_room      *rooms;
-} t_lem_in;
+}               t_lem_in;
 
 #endif

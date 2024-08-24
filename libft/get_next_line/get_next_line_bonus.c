@@ -25,7 +25,7 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 		dest = malloc((len_s1 + len_s2 + 1) * sizeof(char));
 		if (!dest)
 			return (NULL);
-		ft_strlcpy(dest, ((char *)s1), (len_s1 + 1));
+		ft_strlcpy_gnl(dest, ((char *)s1), (len_s1 + 1));
 		ft_strlcat(dest, s2, (len_s1 + (len_s2 + 1)));
 		return (dest);
 	}
@@ -50,7 +50,7 @@ char	*copy_line(char *str, int *bytes)
 		dest = malloc((i + 1) * sizeof(char));
 		if (!dest)
 			return (NULL);
-		ft_strlcpy(dest, str, (i + 1));
+		ft_strlcpy_gnl(dest, str, (i + 1));
 	}
 	return (dest);
 }

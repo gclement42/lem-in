@@ -34,7 +34,7 @@ t_lem_in parse_data(char **data)
             ft_printf("Room: %s\n", data[i]);
             if (check_if_command(data[i - 1]))
             {
-
+                get_room_name(data[i]);
             }
   
         }

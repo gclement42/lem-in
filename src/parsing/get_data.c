@@ -28,7 +28,6 @@ static char **malloc_data(char *filename)
 char **get_data(char *filename)
 {
     int fd;
-    int count;
     int i;
     char **data;
     char *line;
@@ -50,7 +49,8 @@ char **get_data(char *filename)
         line = get_next_line(fd);
         data[i] = ft_strdup(line);
         if (!data[i])
-            return (NULL);
+            break;
     }
+    close(fd);
     return (data);
 }

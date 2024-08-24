@@ -77,6 +77,9 @@ SRCS                    = libft/ft_atoi.c\
 						ft_printf/ft_putnbr_fd_count.c\
 						ft_printf/ft_putnbr_fd_usign.c\
 						ft_printf/ft_printf_utils.c\
+                        \
+                        get_next_line/get_next_line_bonus.c\
+                        get_next_line/get_next_line_utils_bonus.c\
 
 OBJS                    = $(SRCS:%.c=$(BUILD_DIR)%.o)
 

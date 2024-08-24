@@ -1,7 +1,7 @@
 #include "lem_in.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-    ft_printf("Hello, World!\n");
+    
     return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen_gnl(const char *str)
 {
 	size_t	i;
 
@@ -88,7 +88,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		return (ft_strlen(src));
 }
 
-char	*ft_strdup(const char *source)
+char	*ft_strdup_gnl(const char *source)
 {
 	char	*ptr;
 	int		i;

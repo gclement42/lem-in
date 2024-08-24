@@ -12,14 +12,14 @@
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_gnl(char const *s1, char const *s2)
 {
 	char	*dest;
 	size_t	len_s1;
 	size_t	len_s2;
 
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
+	len_s1 = ft_strlen_gnl(s1);
+	len_s2 = ft_strlen_gnl(s2);
 	if (!(s1 == NULL || s2 == NULL))
 	{	
 		dest = malloc((len_s1 + len_s2 + 1) * sizeof(char));
@@ -78,7 +78,7 @@ char	*read_and_join(char *dest, int fd, int *bytes)
 		return (free (str), dest);
 	if (dest != NULL && str != NULL)
 	{
-		tmp = ft_strjoin(dest, str);
+		tmp = ft_strjoin_gnl(dest, str);
 		return (free(str), free(dest), tmp);
 	}
 	return (str);
@@ -119,7 +119,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	tmp = copy_line(str, &bytes);
 	if (ft_strchr(str, '\n') != 0 && str != NULL)
-		overflow[fd] = ft_strdup(ft_strchr(str, '\n'));
+		overflow[fd] = ft_strdup_gnl(ft_strchr(str, '\n'));
 	else
 		overflow[fd] = NULL;
 	if (tmp[0] == '\0' || tmp == NULL)

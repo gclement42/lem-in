@@ -24,7 +24,7 @@ LIBFT					= libft.a
 LIB_DIR					= libft/
 
 GCC						= gcc
-CFLAGS					= -Wall -Wextra -Werror -fPIE
+CFLAGS					= -Wall -Wextra -Werror
 
 RM 						= rm -rf
 CLEAR					= clear

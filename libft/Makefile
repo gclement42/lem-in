@@ -85,7 +85,7 @@ OBJS                    = $(SRCS:%.c=$(BUILD_DIR)%.o)
 
 BUILD_DIR               = build/
 
-CC                      = cc
+CC                      = gcc
 
 HEAD                    = include/libft.h
 

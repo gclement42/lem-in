@@ -15,6 +15,8 @@ HEADER_FILE				= lem_in.h
 
 DIR						= src/
 SRC			 			= main.c \
+							parsing/parsing_manager.c\
+							parsing/parsing_utils.c\
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)
 	
@@ -22,7 +24,7 @@ LIBFT					= libft.a
 LIB_DIR					= libft/
 
 GCC						= gcc
-CFLAGS					= -Wall -Wextra -Werror
+CFLAGS					= -Wall -Wextra -Werror -fPIE
 
 RM 						= rm -rf
 CLEAR					= clear

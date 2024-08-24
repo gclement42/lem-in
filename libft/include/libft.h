@@ -106,10 +106,5 @@ void		ft_putnbr_fd_pf(int n, int fd);
 
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *str);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
-size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-char	*ft_strdup( const char *source );
-char	*ft_strchr(const char	*string, int searchCh);
 
 #endif 

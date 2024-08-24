@@ -7,6 +7,9 @@
 # include <string.h>
 # include <limits.h>
 # include <stdbool.h>
+
+#include <fcntl.h>
+
 # include "../libft/include/libft.h"
 
 typedef struct s_vector
@@ -35,8 +38,13 @@ typedef struct s_lem_in
     int         start;
     int         end;
     int         n_rooms;
-    
+
     t_room      *rooms;
 } t_lem_in;
+
+// Parsing
+
+bool parse_file(char *map_path);
+int	open_map(char *map_path);
 
 #endif

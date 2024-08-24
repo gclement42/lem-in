@@ -21,7 +21,7 @@ static bool get_links(t_lem_in *lem_in, char **data)
     int i;
     int j;
 
-    i = 0;
+    i = 1;
     j = 0;
     while (data[i])
     {

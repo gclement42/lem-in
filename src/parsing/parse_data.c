@@ -16,7 +16,7 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     return (true);
 }
 
-static void get_links(t_lem_in *lem_in, char **data)
+static bool get_links(t_lem_in *lem_in, char **data)
 {
     int i;
     int j;
@@ -25,15 +25,17 @@ static void get_links(t_lem_in *lem_in, char **data)
     j = 0;
     while (data[i])
     {
-        if (check_if_link(data[i]) && check_is_valid_link(data[i]))
+        if (check_if_link(data[i]))
         {
+            if (!check_is_valid_link(data[i]))
+                return (false);
             lem_in->links[j] = ft_strdup(data[i]);
             j++;
         }
         i++;
     }
     lem_in->links[j] = NULL;
-    ft_print_array(lem_in->links);
+    return (true);
 }
 
 t_lem_in parse_data(char **data)
@@ -41,8 +43,8 @@ t_lem_in parse_data(char **data)
     t_lem_in    lem_in;
 
     init_lem_in(&lem_in, data);
-    get_links(&lem_in, data);
+    if (!get_links(&lem_in, data))
+        ft_print_error("There is an invalid link.\n");
 
-    
     return (lem_in);
 }

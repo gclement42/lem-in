@@ -12,7 +12,7 @@
 # include "struct.h"
 # include "parsing.h"
 
-// Global utils
+// ----------------------------- Global utils -----------------------------
 
 void ft_print_error(char *error);
 

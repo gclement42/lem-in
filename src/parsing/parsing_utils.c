@@ -35,7 +35,6 @@ bool check_is_valid_link(char *line)
     i = 0;
     while (line[i] != '-')
         i++;
-    ft_printf("i = %d\n", i);
     if (line[i + 1] == '\0' || line[i + 1] == '\n')
         return (false);
     return (true);
@@ -69,6 +68,37 @@ int count_n_links(char **data)
         i++;
     }
     return (n_links);
+}
+
+int count_n_rooms(char **data)
+{
+    int i;
+    int n_rooms;
+
+    i = 0;
+    n_rooms = 0;
+    while (data[i])
+    {
+        if (check_if_room(data[i]))
+            n_rooms++;
+        i++;
+    }
+    return (n_rooms);
+}
+
+t_vector get_room_pos(char *line)
+{
+    t_vector pos;
+    int i;
+
+    i = 0;
+    while (line[i] != ' ')
+        i++;
+    pos.x = ft_atoi(&line[i + 1]);
+    while (line[i] != ' ')
+        i++;
+    pos.y = ft_atoi(&line[i + 1]);
+    return (pos);
 }
 
 int	open_map(char *map_path)

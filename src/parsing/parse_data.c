@@ -2,7 +2,7 @@
 
 static bool init_lem_in(t_lem_in *lem_in, char **data)
 {
-    lem_in->ants = ft_atoi(data[0]);
+    lem_in->ants = 0;
     if (lem_in->ants <= 0)
         return (false);
 
@@ -45,24 +45,45 @@ static bool get_links(t_lem_in *lem_in, char **data)
 static void get_rooms(t_lem_in *lem_in, char **data)
 {
     int i;
-    int j;
+    int id;
 
     i = 1;
-    j = 0;
+    id = 0;
     while (data[i])
     {
         if (check_if_room(data[i]))
         {
             t_vector room_pos = get_room_pos(data[i]);
-            lem_in->rooms[j].id = j;
-            lem_in->rooms[j].is_empty = true;
-            lem_in->rooms[j].pos.x = room_pos.x;
-            lem_in->rooms[j].pos.y = room_pos.y;
-            j++;
+            lem_in->rooms[id].id = id;
+            lem_in->rooms[id].is_empty = true;
+            lem_in->rooms[id].pos.x = room_pos.x;
+            lem_in->rooms[id].pos.y = room_pos.y;
+            id++;
         }
         i++;
     }
-    lem_in->rooms[j].id = -1;
+    lem_in->rooms[id].id = -1;
+}
+
+static void get_nb_ants(t_lem_in *lem_in, char **data)
+{
+    int i;
+    int nb_ants;
+
+    i = 0;
+    nb_ants = 0;
+    while (data[i])
+    {
+        if (check_if_ants(data[i])) 
+        {
+            nb_ants = ft_atoi(data[i]);
+            break;
+        }
+        i++;
+    }
+    if (nb_ants <= 0)
+        fatal_errors_handler(lem_in, "Invalid number of ants.\n");
+    lem_in->ants = nb_ants;
 }
 
 t_lem_in parse_data(char **data)
@@ -70,11 +91,12 @@ t_lem_in parse_data(char **data)
     t_lem_in    lem_in;
 
     init_lem_in(&lem_in, data);
+    get_nb_ants(&lem_in, data);
+    get_rooms(&lem_in, data);
     if (!get_links(&lem_in, data))
-        ft_print_error("There is an invalid link.\n");
+        print_error("There is an invalid link.\n");
         // put a return here
         
-    get_rooms(&lem_in, data);
 
     return (lem_in);
 }

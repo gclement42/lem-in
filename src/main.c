@@ -12,7 +12,7 @@ static bool check_extension(char *filename)
         || filename[i - 3] != 'm' 
         || filename[i - 4] != '.')
     {
-        ft_print_error("Please use a .map file.\n");
+        print_error("Please use a .map file.\n");
         return (false);
     }
     return (true);
@@ -22,7 +22,7 @@ static bool check_arguments(int argc, char *filename)
 {
     if (argc != 2)
     {
-        ft_print_error("Usage: ./lem-in [file].\n");
+        print_error("Usage: ./lem-in [file].\n");
         return (false);
     }
     if (!check_extension(filename))

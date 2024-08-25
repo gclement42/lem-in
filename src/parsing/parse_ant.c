@@ -6,8 +6,3 @@ bool check_if_ants(char *line)
         return (false);
     return (true);
 }
-
-bool check_if_valid_nb_ants(char *line)
-{
-
-}

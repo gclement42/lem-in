@@ -1,3 +1,5 @@
+#include "lem_in.h"
+
 bool check_if_link(char *line)
 {
     if (ft_strchr(line, '-') && line[0] != 'L' && line[0] != '#')

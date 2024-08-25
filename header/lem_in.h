@@ -11,10 +11,9 @@
 # include "../libft/include/libft.h"
 # include "struct.h"
 # include "parsing.h"
+# include "errors.h"
 
 // ----------------------------- Global utils -----------------------------
-
-void ft_print_error(char *error);
 
 
 

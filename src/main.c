@@ -33,6 +33,7 @@ static bool check_arguments(int argc, char *filename)
 int main(int argc, char **argv)
 {
     char **data;
+    t_lem_in lem_in;
 
     if (!check_arguments(argc, argv[1]))
         return (EXIT_FAILURE);
@@ -41,7 +42,7 @@ int main(int argc, char **argv)
     if (!data)
         return (EXIT_FAILURE);
         
-    parse_data(data);
-
+    lem_in = parse_data(data);
+    printf("Number of ants: %d\n", lem_in.ants);
     return (EXIT_SUCCESS);
 }

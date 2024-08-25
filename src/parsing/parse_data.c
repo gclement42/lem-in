@@ -96,7 +96,5 @@ t_lem_in parse_data(char **data)
     if (!get_links(&lem_in, data))
         print_error("There is an invalid link.\n");
         // put a return here
-        
-
     return (lem_in);
 }

@@ -37,7 +37,6 @@ typedef struct s_lem_in
     int         end;
     int         n_rooms;
 
-    char        **links;
     t_room      *rooms;
 }               t_lem_in;
 

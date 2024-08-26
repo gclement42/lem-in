@@ -52,6 +52,7 @@ t_array *get_data(char *filename)
         if (check_if_comment(line))
             continue;
         i++;
+        line = ft_strtrim(line, " ");
         data->arr[i] = ft_strdup(line);
         if (!data->arr[i])
             break;

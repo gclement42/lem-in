@@ -21,6 +21,7 @@ int                 count_n_links(char **data);
 int                 count_n_rooms(char **data);
 char                *get_room_name(char *line);
 t_vector            get_room_pos(char *line);
+void                set_room(t_room *room, int id, char *name, t_vector pos);
 
 
 

@@ -2,9 +2,21 @@
 
 bool check_if_room(char *line)
 {
-    if (ft_strchr(line, ' ') && line[0] != 'L' && line[0] != '#')
-        return (true);
-    return (false);
+    if (check_if_link(line) || check_if_command(line))
+        return (false);
+    if (line[0] == 'L')
+        return (false);
+    if (strchr(line, ' ') == NULL)
+        return (false);
+    return (true);
+}
+
+void set_room(t_room *room, int id, char *name, t_vector pos)
+{
+    room->id = id;
+    room->name = name;
+    room->pos = pos;
+    room->is_empty = true;
 }
 
 int count_n_rooms(char **data)

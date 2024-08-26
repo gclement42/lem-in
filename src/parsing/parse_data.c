@@ -2,9 +2,7 @@
 
 static bool init_lem_in(t_lem_in *lem_in, char **data)
 {
-    lem_in->ants = 0;
-    if (lem_in->ants <= 0)
-        return (false);
+    lem_in->ants = 1;
 
     lem_in->start = 0;
     lem_in->end = 0;

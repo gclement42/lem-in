@@ -24,8 +24,9 @@ static char **add_link(char **links, char *link)
 		links[1] = NULL;
 		return (links);
 	}
-	links = ft_realloc(links, sizeof(char *) * (size + 1));
+	links = ft_realloc(links, sizeof(char *) * (size + 2));
 	links[size] = link;
+	links[size + 1] = NULL;
 	return (links);
 }
 
@@ -54,7 +55,7 @@ t_room  *get_room(t_lem_in *lem_in, char *room_name)
     int i;
 
     i = 0;
-    while (lem_in->rooms[i].name)
+    while (i < lem_in->n_rooms)
     {
         if (ft_strncmp(lem_in->rooms[i].name, room_name, ft_strlen(room_name)) == 0)
             return (&lem_in->rooms[i]);

@@ -22,7 +22,6 @@ bool check_is_valid_link(char **link_rooms)
 bool check_if_room_exist(t_lem_in *lem_in, char *room_name)
 {
     if (!get_room(lem_in, room_name)) {
-        printf("Room name: %s\n", room_name);
         return (false);
     }
     return (true);

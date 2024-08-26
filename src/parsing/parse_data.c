@@ -11,10 +11,11 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     lem_in->links = malloc(sizeof(char *) * (count_n_links(data) + 1));
     if (!lem_in->links)
         return (false);
+    int room_size = count_n_rooms(data);
+    printf("Room size: %d\n", room_size);
     lem_in->rooms = malloc(sizeof(t_room) * (count_n_rooms(data) + 1));
     if (!lem_in->rooms)
         return (false);
-
     return (true);
 }
 
@@ -35,7 +36,6 @@ static void get_links(t_lem_in *lem_in, t_array *data)
         if (!check_error_link(lem_in, link_rooms))
             fatal_errors_handler(lem_in, "Invalid link.\n");
         set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1]);
-        set_link_in_rooms(lem_in, link_rooms[1], link_rooms[0]);
         *i += 1;
     }
 }
@@ -61,6 +61,7 @@ static void get_rooms(t_lem_in *lem_in, t_array *data)
         set_room(&lem_in->rooms[id], id, room_name, room_pos);
         id++;
         *i += 1;
+        lem_in->n_rooms++;
     }
     lem_in->rooms[id].id = -1;
 }

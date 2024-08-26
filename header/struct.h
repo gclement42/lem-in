@@ -12,6 +12,7 @@ typedef struct s_vector
 typedef struct s_room
 {
     int         id;
+    char        *name;
     bool        is_empty;
     t_vector    pos;
 }               t_room;

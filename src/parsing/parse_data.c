@@ -53,6 +53,7 @@ static void get_rooms(t_lem_in *lem_in, char **data)
         {
             t_vector room_pos = get_room_pos(data[i]);
             lem_in->rooms[id].id = id;
+            lem_in->rooms[id].name = get_room_name(data[i]);
             lem_in->rooms[id].is_empty = true;
             lem_in->rooms[id].pos.x = room_pos.x;
             lem_in->rooms[id].pos.y = room_pos.y;
@@ -87,6 +88,7 @@ static void get_nb_ants(t_lem_in *lem_in, char **data)
 t_lem_in parse_data(char **data)
 {  
     t_lem_in    lem_in;
+    int         data_index;
 
     init_lem_in(&lem_in, data);
     get_nb_ants(&lem_in, data);

@@ -47,6 +47,10 @@ char **get_data(char *filename)
         i++;
         free(line);
         line = get_next_line(fd);
+        if (!line)
+            break;
+        if (check_if_comment(line))
+            continue; 
         data[i] = ft_strdup(line);
         if (!data[i])
             break;

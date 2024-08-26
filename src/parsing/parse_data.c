@@ -4,15 +4,13 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
 {
     lem_in->ants = 1;
 
-    lem_in->start = 0;
-    lem_in->end = 0;
+    lem_in->start = -1;
+    lem_in->end = -1;
     lem_in->n_rooms = 0;
 
     lem_in->links = malloc(sizeof(char *) * (count_n_links(data) + 1));
     if (!lem_in->links)
         return (false);
-    int room_size = count_n_rooms(data);
-    printf("Room size: %d\n", room_size);
     lem_in->rooms = malloc(sizeof(t_room) * (count_n_rooms(data) + 1));
     if (!lem_in->rooms)
         return (false);
@@ -59,10 +57,16 @@ static void get_rooms(t_lem_in *lem_in, t_array *data)
         if (check_if_room_already_exist(lem_in, room_name))
             fatal_errors_handler(lem_in, "Room already exist.\n");
         set_room(&lem_in->rooms[id], id, room_name, room_pos);
+        if (check_if_command(data->arr[*i - 1]))
+            set_command(lem_in, data->arr[*i - 1], id);
         id++;
         *i += 1;
         lem_in->n_rooms++;
     }
+    if (lem_in->n_rooms == 0)
+        fatal_errors_handler(lem_in, "No rooms found.\n");
+    if (lem_in->start == -1 || lem_in->end == -1)
+        fatal_errors_handler(lem_in, "No start or end room found.\n");
     lem_in->rooms[id].id = -1;
 }
 

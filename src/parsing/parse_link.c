@@ -12,7 +12,7 @@ bool check_is_valid_link(char **link_rooms)
     int i;
 
     i = 0;
-    while (link_rooms[i])
+    while (link_rooms && link_rooms[i])
         i++;
     if (i != 2)
         return (false);

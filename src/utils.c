@@ -7,6 +7,8 @@ void display_data(t_lem_in *lem_in)
     i = 0;
     printf("Ants: %d\n", lem_in->ants);
     printf("Rooms:\n\n");
+    printf("Start: %s\n", lem_in->rooms[lem_in->start].name);
+    printf("End: %s\n", lem_in->rooms[lem_in->end].name);
     while (lem_in->rooms[i].id != -1)
     {
         printf("%d: %s, [%d, %d]\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);

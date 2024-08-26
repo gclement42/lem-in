@@ -72,6 +72,9 @@ fclean:					clean
 norm:
 							@norminette $(DIR)
 
+sanit:					$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) -fsanitize=address
+
 re:						fclean all
 							$(MAKE) all
 							@echo "$(GREEN)[REMAKE DONE] $(END)"

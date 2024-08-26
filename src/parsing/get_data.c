@@ -13,7 +13,7 @@ static int count_line(char *filename)
     return (count);
 }
 
-static char **malloc_data(char *filename)
+static char **malloc_arr(char *filename)
 {
     char **data;
     int count;
@@ -25,34 +25,35 @@ static char **malloc_data(char *filename)
     return (data);
 }
 
-char **get_data(char *filename)
+t_array *get_data(char *filename)
 {
     int fd;
     int i;
-    char **data;
+    t_array *data;
     char *line;
 
     i = 0;
-    data = malloc_data(filename);
-    if (!data)
+    data = malloc(sizeof(t_array));
+    data->arr = malloc_arr(filename);
+    if (!data->arr)
         return (NULL);
     fd = open_map(filename);
     line = get_next_line(fd);
-    data[0] = ft_strdup(line);
-    if (!data[0])
+    data->arr[0] = ft_strdup(line);
+    if (!data->arr[0])
         return (NULL);
     
     while (line)
     {
-        i++;
         free(line);
         line = get_next_line(fd);
         if (!line)
             break;
         if (check_if_comment(line))
-            continue; 
-        data[i] = ft_strdup(line);
-        if (!data[i])
+            continue;
+        i++;
+        data->arr[i] = ft_strdup(line);
+        if (!data->arr[i])
             break;
     }
     close(fd);

@@ -9,7 +9,7 @@ void display_data(t_lem_in *lem_in)
     printf("Rooms:\n\n");
     while (lem_in->rooms[i].id != -1)
     {
-        printf("%d: %d %d\n", lem_in->rooms[i].id, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);
+        printf("%d: %s, [%d, %d]\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);
         i++;
     }
     i = 0;

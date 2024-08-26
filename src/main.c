@@ -32,7 +32,7 @@ static bool check_arguments(int argc, char *filename)
 
 int main(int argc, char **argv)
 {
-    char **data;
+    t_array *data;
     t_lem_in lem_in;
 
     if (!check_arguments(argc, argv[1]))
@@ -41,7 +41,6 @@ int main(int argc, char **argv)
     data = get_data(argv[1]);
     if (!data)
         return (EXIT_FAILURE);
-        
     lem_in = parse_data(data);
     display_data(&lem_in);
     return (EXIT_SUCCESS);

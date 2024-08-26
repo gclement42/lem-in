@@ -17,6 +17,12 @@ typedef struct s_room
     t_vector    pos;
 }               t_room;
 
+typedef struct s_array
+{
+    char        **arr;
+    int         index;
+}               t_array;
+
 typedef struct s_ant
 {
     int         id;

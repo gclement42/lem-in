@@ -43,6 +43,6 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
         
     lem_in = parse_data(data);
-    printf("Number of ants: %d\n", lem_in.ants);
+    display_data(&lem_in);
     return (EXIT_SUCCESS);
 }

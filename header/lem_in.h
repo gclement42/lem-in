@@ -14,7 +14,7 @@
 # include "errors.h"
 
 // ----------------------------- Global utils -----------------------------
-
+void display_data(t_lem_in *lem_in);
 
 
 #endif

@@ -11,6 +11,13 @@ bool check_if_room(char *line)
     return (true);
 }
 
+bool check_if_room_already_exist(t_lem_in *lem_in, char *room_name)
+{
+    if (get_room(lem_in, room_name))
+        return (true);
+    return (false);
+}
+
 int count_n_rooms(char **data)
 {
     int i;

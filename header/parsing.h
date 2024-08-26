@@ -13,6 +13,7 @@ t_lem_in            parse_data(t_array *data);
 bool                check_if_comment(char *line);
 bool                check_if_command(char *line);
 bool                check_if_room(char *line);
+bool				check_if_room_already_exist(t_lem_in *lem_in, char *room_name);
 bool                check_if_link(char *line);
 bool 				check_error_link(t_lem_in *lem_in, char **link_rooms);
 bool				check_is_valid_link(char **link_rooms);

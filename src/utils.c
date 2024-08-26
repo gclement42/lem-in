@@ -10,13 +10,32 @@ void display_data(t_lem_in *lem_in)
     while (lem_in->rooms[i].id != -1)
     {
         printf("%d: %s, [%d, %d]\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);
+        int j = 0;
+        while (lem_in->rooms[i].links && lem_in->rooms[i].links[j])
+        {
+            printf("Link: %s\n", lem_in->rooms[i].links[j]);
+            j++;
+        }
         i++;
     }
     i = 0;
-    printf("\nLinks:\n\n");
-    while (lem_in->links[i])
+}
+
+void *ft_realloc(void *ptr, size_t size)
+{
+    void *new_ptr;
+
+    if (!ptr)
+        return (malloc(size));
+    if (size == 0)
     {
-        printf("%s", lem_in->links[i]);
-        i++;
+        free(ptr);
+        return (NULL);
     }
+    new_ptr = malloc(size);
+    if (!new_ptr)
+        return (NULL);
+    ft_memcpy(new_ptr, ptr, size);
+    free(ptr);
+    return (new_ptr);
 }

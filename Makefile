@@ -16,6 +16,7 @@ HEADER_FILE				= lem_in.h
 DIR						= src/
 SRC			 			= main.c \
 							utils.c\
+							room.c\
 							parsing/get_data.c\
 							parsing/parsing_utils.c\
 							parsing/parse_data.c\

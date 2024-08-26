@@ -18,26 +18,26 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     return (true);
 }
 
-static bool get_links(t_lem_in *lem_in, t_array *data)
+static void get_links(t_lem_in *lem_in, t_array *data)
 {
     int *i;
-    int j;
+    char **link_rooms;
 
     i = &data->index;
-    j = 0;
-    while (data->arr[*i])
+    while (data->arr[*i] && (check_if_link(data->arr[*i]) || check_if_command(data->arr[*i])))
     {
-        if (check_if_link(data->arr[*i]))
+        if (check_if_command(data->arr[*i]))
         {
-            if (!check_is_valid_link(data->arr[*i])) 
-                return (false);
-            lem_in->links[j] = ft_strdup(data->arr[*i]);
-            j++;
+            *i += 1;
+            continue;
         }
+        link_rooms = ft_split(data->arr[*i], '-');
+        if (!check_error_link(lem_in, link_rooms))
+            fatal_errors_handler(lem_in, "Invalid link.\n");
+        set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1]);
+        set_link_in_rooms(lem_in, link_rooms[1], link_rooms[0]);
         *i += 1;
     }
-    lem_in->links[j] = NULL;
-    return (true);
 }
 
 static void get_rooms(t_lem_in *lem_in, t_array *data)
@@ -90,7 +90,6 @@ t_lem_in parse_data(t_array *data)
     init_lem_in(&lem_in, data->arr);
     get_nb_ants(&lem_in, data);
     get_rooms(&lem_in, data);
-    if (!get_links(&lem_in, data))
-        print_error("There is an invalid link.\n");
+    get_links(&lem_in, data);
     return (lem_in);
 }

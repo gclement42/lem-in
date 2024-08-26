@@ -11,14 +11,6 @@ bool check_if_room(char *line)
     return (true);
 }
 
-void set_room(t_room *room, int id, char *name, t_vector pos)
-{
-    room->id = id;
-    room->name = name;
-    room->pos = pos;
-    room->is_empty = true;
-}
-
 int count_n_rooms(char **data)
 {
     int i;

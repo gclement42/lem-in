@@ -10,11 +10,13 @@
 
 # include "../libft/include/libft.h"
 # include "struct.h"
+# include "room.h"
 # include "parsing.h"
 # include "errors.h"
 
 // ----------------------------- Global utils -----------------------------
 void display_data(t_lem_in *lem_in);
+void *ft_realloc(void *ptr, size_t size);
 
 
 #endif

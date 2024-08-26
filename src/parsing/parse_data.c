@@ -24,7 +24,7 @@ static void get_links(t_lem_in *lem_in, t_array *data)
     char **link_rooms;
 
     i = &data->index;
-    while (data->arr[*i] && (check_if_link(data->arr[*i]) || check_if_command(data->arr[*i])))
+    while (data->arr[*i])
     {
         if (check_if_command(data->arr[*i]))
         {
@@ -56,6 +56,8 @@ static void get_rooms(t_lem_in *lem_in, t_array *data)
         }
         t_vector room_pos = get_room_pos(data->arr[*i]);
         char *room_name = get_room_name(data->arr[*i]);
+        if (check_if_room_already_exist(lem_in, room_name))
+            fatal_errors_handler(lem_in, "Room already exist.\n");
         set_room(&lem_in->rooms[id], id, room_name, room_pos);
         id++;
         *i += 1;

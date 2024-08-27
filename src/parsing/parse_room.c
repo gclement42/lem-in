@@ -25,7 +25,7 @@ int count_n_rooms(char **data)
 
     i = 0;
     n_rooms = 0;
-    while (data[i])
+    while (data && data[i])
     {
         if (check_if_room(data[i]))
             n_rooms++;

@@ -8,9 +8,6 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     lem_in->end = -1;
     lem_in->n_rooms = 0;
 
-    lem_in->links = malloc(sizeof(char *) * (count_n_links(data) + 1));
-    if (!lem_in->links)
-        return (false);
     lem_in->rooms = malloc(sizeof(t_room) * (count_n_rooms(data) + 1));
     if (!lem_in->rooms)
         return (false);
@@ -34,6 +31,8 @@ static void get_links(t_lem_in *lem_in, t_array *data)
         if (!check_error_link(lem_in, link_rooms))
             fatal_errors_handler(lem_in, "Invalid link.\n");
         set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1]);
+        free(link_rooms[0]);
+        free(link_rooms[1]);
         *i += 1;
     }
 }
@@ -98,5 +97,6 @@ t_lem_in parse_data(t_array *data)
     get_nb_ants(&lem_in, data);
     get_rooms(&lem_in, data);
     get_links(&lem_in, data);
+    free_array(data);
     return (lem_in);
 }

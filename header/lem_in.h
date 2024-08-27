@@ -13,6 +13,7 @@
 # include "room.h"
 # include "parsing.h"
 # include "errors.h"
+# include "free.h"
 
 // ----------------------------- Global utils -----------------------------
 void display_data(t_lem_in *lem_in);

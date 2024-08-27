@@ -15,17 +15,21 @@ static int count_size(char **links)
 static char **add_link(char **links, char *link)
 {
 	int size;
+	char *dup_link;
 
+	dup_link = ft_strdup(link);
+	if (!dup_link)
+		return (NULL);
 	size = count_size(links);
 	if (size == 0)
 	{
 		links = (char **)malloc(sizeof(char *) * 2);
-		links[0] = link;
+		links[0] = dup_link;
 		links[1] = NULL;
 		return (links);
 	}
 	links = ft_realloc(links, sizeof(char *) * (size + 2));
-	links[size] = link;
+	links[size] = dup_link;
 	links[size + 1] = NULL;
 	return (links);
 }

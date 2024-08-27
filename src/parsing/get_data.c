@@ -4,11 +4,17 @@ static int count_line(char *filename)
 {
     int count;
     int fd;
+    char *line;
 
     count = 0;
     fd = open_map(filename);
-    while (get_next_line(fd))
-        count++;
+    line = get_next_line(fd);
+    while (line) {
+        if (!check_if_comment(line))
+            count++;
+        free(line);
+        line = get_next_line(fd);
+    }
     close(fd);
     return (count);
 }
@@ -22,6 +28,7 @@ static char **malloc_arr(char *filename)
     data = (char **)malloc(sizeof(char *) * (count + 1));
     if (!data)
         return (NULL);
+    ft_bzero(data, sizeof(char *) * (count + 1));
     return (data);
 }
 

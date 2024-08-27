@@ -1,36 +1,32 @@
 #include "lem_in.h"
 
-static int count_size(char **links)
+static void free_old_array(char **arr, size_t size)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	if (!links)
-		return (0);
-	while (links[i])
+	while (i < size)
+	{
+		free(arr[i]);
 		i++;
-	return (i);
+	}
+	free(arr);
 }
 
-static char **add_link(char **links, char *link)
+static void *add_link(t_array *links, char *link)
 {
-	int size;
 	char *dup_link;
 
 	dup_link = ft_strdup(link);
 	if (!dup_link)
 		return (NULL);
-	size = count_size(links);
-	if (size == 0)
-	{
-		links = (char **)malloc(sizeof(char *) * 2);
-		links[0] = dup_link;
-		links[1] = NULL;
-		return (links);
-	}
-	links = ft_realloc(links, sizeof(char *) * (size + 2));
-	links[size] = dup_link;
-	links[size + 1] = NULL;
+	links->size += 1;
+	char **tmp = (char **)ft_realloc(links->arr, sizeof(char *), links->size + 1);
+	if (!tmp)
+		return (NULL);
+	free_old_array(links->arr, links->size - 1);
+	links->arr = tmp;
+	links->arr[links->size - 1] = dup_link;
 	return (links);
 }
 
@@ -41,7 +37,8 @@ void set_link_in_rooms(t_lem_in *lem_in, char *room1, char *room2)
 	room = get_room(lem_in, room1);
 	if (!room)
 		fatal_errors_handler(lem_in, "Room does not exist.\n");
-	room->links = add_link(room->links, room2);
+	if (!add_link(&room->links, room2))
+		fatal_errors_handler(lem_in, "Malloc error.\n");
 }
 
 void set_room(t_room *room, int id, char *name, t_vector pos)
@@ -50,7 +47,8 @@ void set_room(t_room *room, int id, char *name, t_vector pos)
     room->name = name;
     room->pos = pos;
     room->is_empty = true;
-    room->links = NULL;
+    room->links.arr = NULL;
+	room->links.size = 0;
 }
 
 
@@ -61,6 +59,8 @@ t_room  *get_room(t_lem_in *lem_in, char *room_name)
     i = 0;
     while (i < lem_in->n_rooms)
     {
+		if (!lem_in->rooms[i].name)
+			return (NULL);
         if (ft_strncmp(lem_in->rooms[i].name, room_name, ft_strlen(room_name)) == 0)
             return (&lem_in->rooms[i]);
         i++;

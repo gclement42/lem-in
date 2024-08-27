@@ -38,9 +38,11 @@ t_array *get_data(char *filename)
     int i;
     t_array *data;
     char *line;
+    char *trim_line;
 
     i = 0;
     data = malloc(sizeof(t_array));
+    data->size = 0;
     data->arr = malloc_arr(filename);
     if (!data->arr)
         return (NULL);
@@ -59,11 +61,15 @@ t_array *get_data(char *filename)
         if (check_if_comment(line))
             continue;
         i++;
-        line = ft_strtrim(line, " \n");
-        data->arr[i] = ft_strdup(line);
-        if (!data->arr[i])
-            break;
+        trim_line = ft_strtrim(line, " \n");
+        data->arr[i] = trim_line;
+        if (!data->arr[i]) {
+            free_array(data);
+            fatal_errors_handler(NULL, "Malloc error.\n");
+        }
+        data->size++;
     }
+    free(line);
     close(fd);
     return (data);
 }

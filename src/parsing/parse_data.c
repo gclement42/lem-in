@@ -11,6 +11,7 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     lem_in->rooms = malloc(sizeof(t_room) * (count_n_rooms(data) + 1));
     if (!lem_in->rooms)
         return (false);
+    
     return (true);
 }
 
@@ -33,6 +34,7 @@ static void get_links(t_lem_in *lem_in, t_array *data)
         set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1]);
         free(link_rooms[0]);
         free(link_rooms[1]);
+        free(link_rooms);
         *i += 1;
     }
 }
@@ -98,5 +100,6 @@ t_lem_in parse_data(t_array *data)
     get_rooms(&lem_in, data);
     get_links(&lem_in, data);
     free_array(data);
+    free(data);
     return (lem_in);
 }

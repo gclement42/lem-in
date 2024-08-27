@@ -2,16 +2,8 @@
 
 void free_room(t_room *room)
 {
-	int i;
-
-	i = 0;
-	while (room->links && room->links[i])
-	{
-		free(room->links[i]);
-		i++;
-	}
+	free_array(&room->links);
 	free(room->name);
-	free(room);
 }
 
 void free_lem_in(t_lem_in *lem_in)
@@ -25,19 +17,17 @@ void free_lem_in(t_lem_in *lem_in)
 		i++;
 	}
 	free(lem_in->rooms);
-	free(lem_in);
 }
 
 void free_array(t_array *data)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (data->arr[i])
+	while (i < data->size)
 	{
 		free(data->arr[i]);
 		i++;
 	}
 	free(data->arr);
-	free(data);
 }

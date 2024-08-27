@@ -9,20 +9,22 @@ typedef struct s_vector
     int         y;
 }               t_vector;
 
+typedef struct s_array
+{
+    char        **arr;
+    int         index;
+    size_t      size;
+}               t_array;
+
 typedef struct s_room
 {
     int         id;
     char        *name;
     bool        is_empty;
-    char        **links;
+    t_array     links;
     t_vector    pos;
 }               t_room;
 
-typedef struct s_array
-{
-    char        **arr;
-    int         index;
-}               t_array;
 
 typedef struct s_ant
 {

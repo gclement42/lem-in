@@ -44,26 +44,21 @@ static t_array *init_data(char *filename)
     return (data);
 }
 
-t_array *get_data(char *filename)
+static void read_data(t_array *data, int fd) 
 {
-    int fd;
     int i;
-    t_array *data;
     char *line;
     char *trim_line;
 
     i = 0;
-    data = init_data(filename);
-    if (!data)
-        return (NULL);
-    fd = open_map(filename);
     line = get_next_line(fd);
+
     data->arr[0] = ft_strdup(line);
     if (!data->arr[0])
-        return (NULL);
-    
+        printf("Error\n");// TODO: free data
     while (line)
     {
+        printf("line: %s\n", line);
         free(line);
         line = get_next_line(fd);
         if (!line)
@@ -80,6 +75,18 @@ t_array *get_data(char *filename)
         data->size++;
     }
     free(line);
+}
+
+t_array *get_data(char *filename)
+{
+    int fd;
+    t_array *data;
+
+    data = init_data(filename);
+    if (!data)
+        return (NULL);
+    fd = open_map(filename);
+    read_data(data, fd);
     close(fd);
     return (data);
 }

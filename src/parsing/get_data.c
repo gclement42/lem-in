@@ -32,6 +32,18 @@ static char **malloc_arr(char *filename)
     return (data);
 }
 
+static t_array *init_data(char *filename)
+{
+    t_array *data;
+
+    data = malloc(sizeof(t_array));
+    data->size = 0;
+    data->arr = malloc_arr(filename);
+    if (!data->arr)
+        return (NULL);
+    return (data);
+}
+
 t_array *get_data(char *filename)
 {
     int fd;
@@ -41,10 +53,8 @@ t_array *get_data(char *filename)
     char *trim_line;
 
     i = 0;
-    data = malloc(sizeof(t_array));
-    data->size = 0;
-    data->arr = malloc_arr(filename);
-    if (!data->arr)
+    data = init_data(filename);
+    if (!data)
         return (NULL);
     fd = open_map(filename);
     line = get_next_line(fd);

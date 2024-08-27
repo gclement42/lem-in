@@ -34,14 +34,16 @@ LIBFT					= libft.a
 LIB_DIR					= libft/
 
 GCC						= gcc
-CFLAGS					= -Wall -Wextra -Werror
+CFLAGS					= -Wall -Wextra -Werror -I/usr/include -O3 -c
+
+LDFLAGS					= -L/usr/lib -lGL -lGLU -lglut -lm
 
 RM 						= rm -rf
 CLEAR					= clear
 
 $(BUILD_DIR)%.o:		$(DIR)%.c $(LIB_DIR) $(HEADER_DIR)/$(HEADER_FILE)
 							@mkdir -p $(@D)
-							$(GCC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIB_DIR) -I/usr/include -O3 -c $< -o $@ -g
+							$(GCC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIB_DIR) $< -o $@ -g
 
 all: 					clear mkbuild lib $(HEADER_DIR) $(NAME) 
 							@echo "$(GREEN)[LEM-IN IS READY] $(END)"
@@ -53,7 +55,7 @@ clear:
 							$(CLEAR)
 						
 $(NAME): 				$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
-							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT)
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) $(LDFLAGS)
 							
 lib:
 							@make -C $(LIB_DIR)
@@ -74,7 +76,7 @@ norm:
 							@norminette $(DIR)
 
 sanit:					$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
-							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) -fsanitize=address
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) $(LDFLAGS) -fsanitize=address
 
 re:						fclean all
 							$(MAKE) all

@@ -7,6 +7,8 @@
 # include <string.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <GL/glut.h> 
+# include<math.h> 
 
 # include "../libft/include/libft.h"
 # include "struct.h"
@@ -14,6 +16,8 @@
 # include "parsing.h"
 # include "errors.h"
 # include "free.h"
+
+#define pi 3.142857 
 
 // ----------------------------- Global utils -----------------------------
 void display_data(t_lem_in *lem_in);

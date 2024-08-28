@@ -46,6 +46,18 @@ static t_array *init_data(char *filename)
     return (data);
 }
 
+static void full_gnl(int fd)
+{
+    char *line;
+
+    line = get_next_line(fd);
+    while (line)
+    {
+        free(line);
+        line = get_next_line(fd);
+    }
+}
+
 static void read_data(t_array *data, int fd) 
 {
     int i;
@@ -68,11 +80,20 @@ static void read_data(t_array *data, int fd)
             continue;
         i++;
         trim_line = ft_strtrim(line, " \n");
-        data->arr[i] = ft_strdup(trim_line);
-        if (!data->arr[i]) 
-            fatal_errors_handler(NULL, "Malloc error.\n", data);
+        data->arr[i] = trim_line;
+        if (!data->arr[i])
+        {
+            full_gnl(fd);
+            free(line);
+            free(data->arr[0]);
+            free_array(data);
+            free(data);
+            free(trim_line);
+            ft_printf("Erroffr\n");
+            close(fd);
+            exit(EXIT_FAILURE);
+        }
         data->size++;
-        free(trim_line);
     }
     free(line);
 }
@@ -82,7 +103,7 @@ t_array *get_data(char *filename)
     int fd;
     t_array *data;
 
-    data = init_data(filename);
+    data = NULL;//init_data(filename);
     if (!data)
         return (NULL);
     fd = open_map(filename);

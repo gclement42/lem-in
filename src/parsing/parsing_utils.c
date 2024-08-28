@@ -46,3 +46,17 @@ void full_gnl_loop(int fd)
         line = get_next_line(fd);
     }
 }
+
+bool is_num(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (!ft_isdigit(str[i]))
+            return (false);
+        i++;
+    }
+    return (true);
+}

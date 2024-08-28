@@ -1,12 +1,12 @@
-3
+5
 ##start
 a 9 0
 ##end
 z 10 10
 b 1 1
 c 2 2
-##links
 a-b
+##links
 b-c
 #comment
 c-z

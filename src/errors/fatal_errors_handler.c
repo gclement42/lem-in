@@ -11,7 +11,7 @@ void fatal_errors_handler(t_lem_in *lem_in, char *error, t_array *data)
 
 void error_data(char *error, char *line, t_array *data, int fd)
 {
-	full_gnl(fd);
+	full_gnl_loop(fd);
 	print_error(error);
 	free(line);
 	free_array(data);

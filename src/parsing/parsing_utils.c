@@ -35,7 +35,7 @@ int	open_map(char *map_path)
 	return (fd);
 }
 
-void full_gnl(int fd)
+void full_gnl_loop(int fd)
 {
     char *line;
 

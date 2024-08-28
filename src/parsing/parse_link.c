@@ -19,14 +19,6 @@ bool check_is_valid_link(char **link_rooms)
     return (true);
 }
 
-bool check_if_room_exist(t_lem_in *lem_in, char *room_name)
-{
-    if (!get_room(lem_in, room_name)) {
-        return (false);
-    }
-    return (true);
-}
-
 bool check_error_link(t_lem_in *lem_in, char **link_rooms)
 {
     if (!link_rooms)
@@ -52,4 +44,31 @@ int count_n_links(char **data)
         i++;
     }
     return (n_links);
+}
+
+void parse_links(t_lem_in *lem_in, t_array *data)
+{
+    int *i;
+    char **link_rooms;
+
+    i = &data->index;
+    while (data->arr[*i])
+    {
+        if (check_if_command(data->arr[*i]))
+        {
+            *i += 1;
+            continue;
+        }
+        link_rooms = ft_split(data->arr[*i], '-');
+        if (!check_error_link(lem_in, link_rooms))
+        {
+            ft_free_array(link_rooms);
+            fatal_errors_handler(lem_in, "Invalid link.\n", data);
+        }
+        set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1], data);
+        free(link_rooms[0]);
+        free(link_rooms[1]);
+        free(link_rooms);
+        *i += 1;
+    }
 }

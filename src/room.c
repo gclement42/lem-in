@@ -10,6 +10,13 @@ void set_room(t_room *room, int id, char *name, t_vector pos)
 	room->links.size = 0;
 }
 
+bool check_if_room_exist(t_lem_in *lem_in, char *room_name)
+{
+    if (!get_room(lem_in, room_name)) {
+        return (false);
+    }
+    return (true);
+}
 
 t_room  *get_room(t_lem_in *lem_in, char *room_name)
 {

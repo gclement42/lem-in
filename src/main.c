@@ -42,8 +42,8 @@ int main(int argc, char **argv)
     if (!data)
         return (EXIT_FAILURE);
     lem_in = parse_data(data);
-    display_data(&lem_in);
+    // display_data(&lem_in);
+    init_window(argc, argv, lem_in);
     free_lem_in(&lem_in);
-    // init_window(argc, argv);
     return (EXIT_SUCCESS);
 }

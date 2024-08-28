@@ -38,7 +38,7 @@ LIB_DIR					= libft/
 GCC						= gcc
 CFLAGS					= -Wall -Wextra -Werror -I/usr/include -O3 -c
 
-LDFLAGS					= -L/usr/lib -lGL -lGLU -lglut -lm
+LDFLAGS					= -L/usr/lib -lGLEW -lGL -lGLU -lglut -lm
 
 RM 						= rm -rf
 CLEAR					= clear

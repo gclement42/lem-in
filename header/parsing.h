@@ -23,8 +23,8 @@ bool 				check_if_room_exist(t_lem_in *lem_in, char *room_name);
 int                 count_n_links(char **data);
 int                 count_n_rooms(char **data);
 char                *get_room_name(char *line);
-t_vector            get_room_pos(char *line);
-void                set_room(t_room *room, int id, char *name, t_vector pos);
+t_vector2            get_room_pos(char *line);
+void                set_room(t_room *room, int id, char *name, t_vector2 pos);
 void 				set_command(t_lem_in *lem_in, char *line, int room_id);
 
 

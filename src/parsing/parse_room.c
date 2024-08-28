@@ -34,9 +34,9 @@ int count_n_rooms(char **data)
     return (n_rooms);
 }
 
-t_vector get_room_pos(char *line)
+t_vector2 get_room_pos(char *line)
 {
-    t_vector pos;
+    t_vector2 pos;
     int i;
 
     i = 0;

@@ -69,7 +69,7 @@ void parse_rooms(t_lem_in *lem_in, t_array *data)
             *i += 1;
             continue;
         }
-        t_vector room_pos = get_room_pos(data->arr[*i]);
+        t_vector2 room_pos = get_room_pos(data->arr[*i]);
         char *room_name = get_room_name(data->arr[*i]);
         if (check_if_room_exist(lem_in, room_name))
             fatal_errors_handler(lem_in, "Room already exist.\n", data);

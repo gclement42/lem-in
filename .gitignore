@@ -1,3 +1,5 @@
 .vscode
 *.o
 lem-in
+build
+libft/libft.a

@@ -7,36 +7,18 @@
 # include <string.h>
 # include <limits.h>
 # include <stdbool.h>
+
 # include "../libft/include/libft.h"
+# include "struct.h"
+# include "link.h"
+# include "room.h"
+# include "parsing.h"
+# include "errors.h"
+# include "free.h"
 
-typedef struct s_vector
-{
-    int         x;
-    int         y;
-} t_vector;
+// ----------------------------- Global utils -----------------------------
+void        display_data(t_lem_in *lem_in);
+void        *ft_realloc(void *ptr, size_t size, size_t len);
 
-typedef struct s_room
-{
-    int         id;
-    char        **links;
-    bool        is_empty;
-    t_vector    pos;
-} t_room;
-
-typedef struct s_ant
-{
-    int         id;
-    t_room      *room;
-} t_ant;
-
-typedef struct s_lem_in
-{
-    int         ants;
-    int         start;
-    int         end;
-    int         n_rooms;
-    
-    t_room      *rooms;
-} t_lem_in;
 
 #endif

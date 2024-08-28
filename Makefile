@@ -15,6 +15,19 @@ HEADER_FILE				= lem_in.h
 
 DIR						= src/
 SRC			 			= main.c \
+							utils.c\
+							room.c\
+							link.c\
+							free.c\
+							parsing/get_data.c\
+							parsing/parsing_utils.c\
+							parsing/parse_data.c\
+							parsing/parse_room.c\
+							parsing/parse_link.c\
+							parsing/parse_ant.c\
+							errors/print_error.c\
+							errors/fatal_errors_handler.c\
+
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)
 	
@@ -60,6 +73,9 @@ fclean:					clean
 
 norm:
 							@norminette $(DIR)
+
+sanit:					$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) -fsanitize=address
 
 re:						fclean all
 							$(MAKE) all

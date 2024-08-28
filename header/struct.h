@@ -42,6 +42,6 @@ typedef struct s_lem_in
     t_room      *rooms;
 }               t_lem_in;
 
-t_room  *get_room(t_lem_in *lem_in, char *room_name);
+
 
 #endif

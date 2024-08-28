@@ -69,7 +69,10 @@ static void read_data(t_array *data, int fd)
 
     data->arr[0] = ft_strdup(line);
     if (!data->arr[0])
-        printf("Error\n");// TODO: free data
+    {
+        full_gnl(fd);
+        error_data("Malloc failed.\n", line, data, fd);
+    }
     while (line)
     {
         free(line);
@@ -83,15 +86,10 @@ static void read_data(t_array *data, int fd)
         data->arr[i] = trim_line;
         if (!data->arr[i])
         {
-            full_gnl(fd);
-            free(line);
             free(data->arr[0]);
-            free_array(data);
-            free(data);
+            full_gnl(fd);
             free(trim_line);
-            ft_printf("Erroffr\n");
-            close(fd);
-            exit(EXIT_FAILURE);
+            error_data("Malloc failed.\n", line, data, fd);
         }
         data->size++;
     }
@@ -103,7 +101,7 @@ t_array *get_data(char *filename)
     int fd;
     t_array *data;
 
-    data = NULL;//init_data(filename);
+    data = init_data(filename);
     if (!data)
         return (NULL);
     fd = open_map(filename);

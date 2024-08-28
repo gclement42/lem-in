@@ -79,7 +79,10 @@ static void read_data(t_array *data, int fd)
         free(line);
         line = get_next_line(fd);
         if (!line)
+        {
+            full_gnl_loop(fd);
             break;
+        }
         if (check_if_comment(line))
             continue;
         i++;
@@ -87,7 +90,6 @@ static void read_data(t_array *data, int fd)
         data->arr[i] = trim_line;
         if (!data->arr[i])
         {
-            free(data->arr[0]);
             free(trim_line);
             error_data("Malloc failed.\n", line, data, fd);
         }

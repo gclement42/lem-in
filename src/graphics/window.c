@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-t_vector3 points[100]; // Assurez-vous que NUM_POINTS est défini correctement
+t_vector3 points[1000]; // Assurez-vous que NUM_POINTS est défini correctement
 int size = 0;
 
 void init_points(t_lem_in lem_in) {
@@ -52,7 +52,7 @@ static void draw(void) {
     // Set the camera position and aim at the centroid
     float camera_x = centroid_x;
     float camera_y = centroid_y;
-    float camera_z = centroid_z + 20.0; // Position the camera 20 units away from the centroid
+    float camera_z = centroid_z + 1.50; // Position the camera 20 units away from the centroid
 
     gluLookAt(camera_x, camera_y, camera_z,  // position (x, y, z) of the eye
               centroid_x, centroid_y, centroid_z,  // point aimed at
@@ -79,7 +79,7 @@ void reshape(int largeur, int hauteur) {
 
     glViewport(0, 0, largeur, hauteur);
 
-    gluPerspective(45.0, ratio, 1.0, 1000.0);
+    gluPerspective(45.0, ratio, 1.0, 100.0);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

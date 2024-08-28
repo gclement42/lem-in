@@ -49,7 +49,7 @@ static t_array *init_data(char *filename)
     data = malloc(sizeof(t_array));
     if (!data)
         return (NULL);
-    data->size = 0;
+    data->size = 1;
     data->arr = malloc_arr(filename);
     if (!data->arr)
     {

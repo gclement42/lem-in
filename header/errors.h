@@ -3,7 +3,7 @@
 
 # include "lem_in.h"
 
-void fatal_errors_handler(t_lem_in *lem_in, char *error);
+void fatal_errors_handler(t_lem_in *lem_in, char *error, t_array *data);
 void print_error(char *error);
 
 #endif

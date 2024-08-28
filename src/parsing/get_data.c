@@ -37,6 +37,8 @@ static t_array *init_data(char *filename)
     t_array *data;
 
     data = malloc(sizeof(t_array));
+    if (!data)
+        return (NULL);
     data->size = 0;
     data->arr = malloc_arr(filename);
     if (!data->arr)
@@ -66,12 +68,11 @@ static void read_data(t_array *data, int fd)
             continue;
         i++;
         trim_line = ft_strtrim(line, " \n");
-        data->arr[i] = trim_line;
-        if (!data->arr[i]) {
-            free_array(data);
-            fatal_errors_handler(NULL, "Malloc error.\n");
-        }
+        data->arr[i] = ft_strdup(trim_line);
+        if (!data->arr[i]) 
+            fatal_errors_handler(NULL, "Malloc error.\n", data);
         data->size++;
+        free(trim_line);
     }
     free(line);
 }

@@ -43,14 +43,14 @@ static void *add_link(t_array *links, char *link)
 	return (links);
 }
 
-void set_link_in_rooms(t_lem_in *lem_in, char *room1, char *room2)
+void set_link_in_rooms(t_lem_in *lem_in, char *room1, char *room2, t_array *data)
 {
     t_room *room;
 
 	room = get_room(lem_in, room1);
 	if (!room)
-		fatal_errors_handler(lem_in, "Room does not exist.\n");
+		fatal_errors_handler(lem_in, "Room does not exist.\n", data);
 	printf("add link %s -> %s\n", room1, room2);
 	if (!add_link(&room->links, room2))
-		fatal_errors_handler(lem_in, "Malloc error.\n");
+		fatal_errors_handler(lem_in, "Malloc error.\n", data);
 }

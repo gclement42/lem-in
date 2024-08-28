@@ -29,11 +29,12 @@ bool check_if_room_exist(t_lem_in *lem_in, char *room_name)
 
 bool check_error_link(t_lem_in *lem_in, char **link_rooms)
 {
+    if (!link_rooms)
+        return (false);
     if (!check_is_valid_link(link_rooms))
         return (false);
-    if (!check_if_room_exist(lem_in, link_rooms[0]) || !check_if_room_exist(lem_in, link_rooms[1])) {
+    if (!check_if_room_exist(lem_in, link_rooms[0]) || !check_if_room_exist(lem_in, link_rooms[1]))
         return (false);
-    }
     return (true);
 }
 

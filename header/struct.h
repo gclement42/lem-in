@@ -25,7 +25,6 @@ typedef struct s_room
     t_vector    pos;
 }               t_room;
 
-
 typedef struct s_ant
 {
     int         id;
@@ -34,14 +33,14 @@ typedef struct s_ant
 
 typedef struct s_lem_in
 {
-    int         ants;
+    int         n_ants;
     int         start;
     int         end;
     int         n_rooms;
 
     t_room      *rooms;
+    t_ant       *ants;
 }               t_lem_in;
-
 
 
 #endif

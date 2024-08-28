@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     if (!data)
         return (EXIT_FAILURE);
     lem_in = parse_data(data);
-    // display_data(&lem_in);
+    display_data(&lem_in);
     free_lem_in(&lem_in);
     return (EXIT_SUCCESS);
 }

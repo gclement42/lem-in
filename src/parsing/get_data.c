@@ -58,7 +58,6 @@ static void read_data(t_array *data, int fd)
         printf("Error\n");// TODO: free data
     while (line)
     {
-        printf("line: %s\n", line);
         free(line);
         line = get_next_line(fd);
         if (!line)

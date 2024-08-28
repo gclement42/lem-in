@@ -10,6 +10,7 @@
 
 # include "../libft/include/libft.h"
 # include "struct.h"
+# include "link.h"
 # include "room.h"
 # include "parsing.h"
 # include "errors.h"

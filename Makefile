@@ -17,6 +17,7 @@ DIR						= src/
 SRC			 			= main.c \
 							utils.c\
 							room.c\
+							link.c\
 							free.c\
 							graphics/window.c\
 							parsing/get_data.c\

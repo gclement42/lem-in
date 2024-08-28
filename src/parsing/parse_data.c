@@ -15,7 +15,7 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
     return (true);
 }
 
-static void get_links(t_lem_in *lem_in, t_array *data)
+static void parse_links(t_lem_in *lem_in, t_array *data)
 {
     int *i;
     char **link_rooms;
@@ -39,7 +39,7 @@ static void get_links(t_lem_in *lem_in, t_array *data)
     }
 }
 
-static void get_rooms(t_lem_in *lem_in, t_array *data)
+static void parse_rooms(t_lem_in *lem_in, t_array *data)
 {
     int *i;
     int id;
@@ -71,7 +71,7 @@ static void get_rooms(t_lem_in *lem_in, t_array *data)
     lem_in->rooms[id].id = -1;
 }
 
-static void get_nb_ants(t_lem_in *lem_in, t_array *data)
+static void parse_nb_ants(t_lem_in *lem_in, t_array *data)
 {
     int i;
     int nb_ants;
@@ -96,9 +96,9 @@ t_lem_in parse_data(t_array *data)
     t_lem_in    lem_in;
 
     init_lem_in(&lem_in, data->arr);
-    get_nb_ants(&lem_in, data);
-    get_rooms(&lem_in, data);
-    get_links(&lem_in, data);
+    parse_nb_ants(&lem_in, data);
+    parse_rooms(&lem_in, data);
+    parse_links(&lem_in, data);
     free_array(data);
     free(data);
     return (lem_in);

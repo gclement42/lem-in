@@ -11,13 +11,6 @@ bool check_if_room(char *line)
     return (true);
 }
 
-bool check_if_room_already_exist(t_lem_in *lem_in, char *room_name)
-{
-    if (get_room(lem_in, room_name))
-        return (true);
-    return (false);
-}
-
 int count_n_rooms(char **data)
 {
     int i;
@@ -60,4 +53,36 @@ char *get_room_name(char *line)
     name = ft_substr(line, 0, i);
 
     return (name);
+}
+
+void parse_rooms(t_lem_in *lem_in, t_array *data)
+{
+    int *i;
+    int id;
+
+    i = &data->index;
+    id = 0;
+    while (data->arr[*i] && (check_if_room(data->arr[*i]) || check_if_command(data->arr[*i])))
+    {
+        if (check_if_command(data->arr[*i]))
+        {
+            *i += 1;
+            continue;
+        }
+        t_vector room_pos = get_room_pos(data->arr[*i]);
+        char *room_name = get_room_name(data->arr[*i]);
+        if (check_if_room_exist(lem_in, room_name))
+            fatal_errors_handler(lem_in, "Room already exist.\n", data);
+        set_room(&lem_in->rooms[id], id, room_name, room_pos);
+        if (check_if_command(data->arr[*i - 1]))
+            set_command(lem_in, data->arr[*i - 1], id);
+        id++;
+        *i += 1;
+        lem_in->n_rooms++;
+    }
+    if (lem_in->n_rooms == 0)
+        fatal_errors_handler(lem_in, "No rooms found.\n", data);
+    if (lem_in->start == -1 || lem_in->end == -1)
+        fatal_errors_handler(lem_in, "No start or end room found.\n", data);
+    lem_in->rooms[id].id = -1;
 }

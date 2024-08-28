@@ -81,6 +81,7 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int			ft_streq(const char *s1, const char *s2);
 void		*ft_free(void **ptr);
+void		ft_free_array(char **array);
 char		*ft_join_three(char *str1, char *str2, char *str3);
 int			ft_array_len(char **array);
 char		**ft_array_dup(char **array);

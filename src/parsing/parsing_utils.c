@@ -24,12 +24,14 @@ void set_command(t_lem_in *lem_in, char *line, int room_id)
 
 int	open_map(char *map_path)
 {
+    (void)map_path;
 	int	fd;
 
 	fd = open(map_path, O_RDONLY);
-	if (fd < 0) {
-		print_error("Error: Could not open file.\n");
-        exit(EXIT_FAILURE);
+	if (fd < 0) 
+    {
+		print_error("Could not open file.\n");
+        return (-1);
     }
 	return (fd);
 }

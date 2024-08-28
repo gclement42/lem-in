@@ -1,5 +1,17 @@
 #include "lem_in.h"
 
+static void full_gnl(int fd)
+{
+    char *line;
+
+    line = get_next_line(fd);
+    while (line)
+    {
+        free(line);
+        line = get_next_line(fd);
+    }
+}
+
 static int count_line(char *filename) 
 {
     int count;
@@ -8,6 +20,8 @@ static int count_line(char *filename)
 
     count = 0;
     fd = open_map(filename);
+    if (fd < 0)
+        return (-1);
     line = get_next_line(fd);
     while (line) {
         if (!check_if_comment(line))
@@ -25,6 +39,8 @@ static char **malloc_arr(char *filename)
     int count;
 
     count = count_line(filename);
+    if (count < 0)
+        return (NULL);
     data = (char **)malloc(sizeof(char *) * (count + 1));
     if (!data)
         return (NULL);
@@ -42,20 +58,12 @@ static t_array *init_data(char *filename)
     data->size = 0;
     data->arr = malloc_arr(filename);
     if (!data->arr)
-        return (NULL);
-    return (data);
-}
-
-static void full_gnl(int fd)
-{
-    char *line;
-
-    line = get_next_line(fd);
-    while (line)
     {
-        free(line);
-        line = get_next_line(fd);
+        free_array(data);
+        free(data);
+        return (NULL);
     }
+    return (data);
 }
 
 static void read_data(t_array *data, int fd) 
@@ -101,10 +109,17 @@ t_array *get_data(char *filename)
     int fd;
     t_array *data;
 
-    data = init_data(filename);
+    data = NULL;//init_data(filename);
     if (!data)
         return (NULL);
     fd = open_map(filename);
+    if (fd < 0)
+    {
+        print_error("Error: Could not open file.\n");
+        free_array(data);
+        free(data);
+        return (NULL);
+    }
     read_data(data, fd);
     close(fd);
     return (data);

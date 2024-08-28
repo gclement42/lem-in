@@ -15,8 +15,10 @@
 # include "parsing.h"
 # include "errors.h"
 # include "free.h"
+# include "ants.h"
 
 // ----------------------------- Global utils -----------------------------
+
 void        display_data(t_lem_in *lem_in);
 void        *ft_realloc(void *ptr, size_t size, size_t len);
 

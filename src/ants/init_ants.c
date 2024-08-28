@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-void   init_ants(t_lem_in *lem_in)
+void init_ants(t_lem_in *lem_in)
 {
     int i;
 

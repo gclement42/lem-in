@@ -1,17 +1,5 @@
 #include "lem_in.h"
 
-static void full_gnl(int fd)
-{
-    char *line;
-
-    line = get_next_line(fd);
-    while (line)
-    {
-        free(line);
-        line = get_next_line(fd);
-    }
-}
-
 static int count_line(char *filename) 
 {
     int count;
@@ -83,10 +71,7 @@ static void read_data(t_array *data, int fd)
 
     data->arr[0] = ft_strdup(line);
     if (!data->arr[0])
-    {
-        full_gnl(fd);
         error_data("Malloc failed.\n", line, data, fd);
-    }
     while (line)
     {
         free(line);
@@ -101,7 +86,6 @@ static void read_data(t_array *data, int fd)
         if (!data->arr[i])
         {
             free(data->arr[0]);
-            full_gnl(fd);
             free(trim_line);
             error_data("Malloc failed.\n", line, data, fd);
         }

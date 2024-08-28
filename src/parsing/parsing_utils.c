@@ -34,3 +34,15 @@ int	open_map(char *map_path)
     }
 	return (fd);
 }
+
+void full_gnl(int fd)
+{
+    char *line;
+
+    line = get_next_line(fd);
+    while (line)
+    {
+        free(line);
+        line = get_next_line(fd);
+    }
+}

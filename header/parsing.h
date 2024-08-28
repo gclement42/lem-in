@@ -26,7 +26,7 @@ char                *get_room_name(char *line);
 t_vector            get_room_pos(char *line);
 void                set_room(t_room *room, int id, char *name, t_vector pos);
 void 				set_command(t_lem_in *lem_in, char *line, int room_id);
-
+void                full_gnl(int fd);
 
 
 #endif

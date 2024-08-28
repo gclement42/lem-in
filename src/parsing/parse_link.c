@@ -32,22 +32,6 @@ static bool check_error_link(t_lem_in *lem_in, char **link_rooms)
     return (true);
 }
 
-// static int count_n_links(char **data)
-// {
-//     int i;
-//     int n_links;
-
-//     i = 0;
-//     n_links = 0;
-//     while (data[i])
-//     {
-//         if (check_if_link(data[i]))
-//             n_links++;
-//         i++;
-//     }
-//     return (n_links);
-// }
-
 bool check_if_link(char *line)
 {
     if (ft_strchr(line, '-') && line[0] != 'L' && line[0] != '#')

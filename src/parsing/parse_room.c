@@ -1,5 +1,41 @@
 #include "lem_in.h"
 
+static t_vector get_room_pos(char *line)
+{
+    t_vector        pos;
+    char            **split;
+
+    split = ft_split(line, ' ');
+    if (!split)
+    {
+        print_error("Split failed.\n");
+        return ((t_vector){-1, -1});
+    }
+    if (ft_array_len(split) != 3 || !is_num(split[1]) || !is_num(split[2]))
+    {
+        ft_free_array(split);
+        return ((t_vector){-1, -1});
+    }
+
+    pos.x = ft_atoi(split[1]);
+    pos.y = ft_atoi(split[2]);
+    ft_free_array(split);
+    return (pos);
+}
+
+static char *get_room_name(char *line)
+{
+    char *name;
+    int i;
+
+    i = 0;
+    while (line[i] != ' ')
+        i++;
+    name = ft_substr(line, 0, i);
+
+    return (name);
+}
+
 bool check_if_room(char *line)
 {
     if (check_if_link(line) || check_if_command(line))
@@ -25,42 +61,6 @@ int count_n_rooms(char **data)
         i++;
     }
     return (n_rooms);
-}
-
-t_vector get_room_pos(char *line)
-{
-    t_vector        pos;
-    char            **split;
-
-    split = ft_split(line, ' ');
-    if (!split)
-    {
-        print_error("Split failed.\n");
-        return ((t_vector){-1, -1});
-    }
-    if (ft_array_len(split) != 3 || !is_num(split[1]) || !is_num(split[2]))
-    {
-        ft_free_array(split);
-        return ((t_vector){-1, -1});
-    }
-
-    pos.x = ft_atoi(split[1]);
-    pos.y = ft_atoi(split[2]);
-    ft_free_array(split);
-    return (pos);
-}
-
-char *get_room_name(char *line)
-{
-    char *name;
-    int i;
-
-    i = 0;
-    while (line[i] != ' ')
-        i++;
-    name = ft_substr(line, 0, i);
-
-    return (name);
 }
 
 void parse_rooms(t_lem_in *lem_in, t_array *data)

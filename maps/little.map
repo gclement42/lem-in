@@ -2,11 +2,14 @@
 ##start
 a 9 0
 ##end
-z 10 10
-b 1 1
-c 2 2
+z 8 4 
+b 1 9
+c 7 9
+1 5 5
+##links
 a-b
 ##links
 b-c
 #comment
 c-z
+a-z

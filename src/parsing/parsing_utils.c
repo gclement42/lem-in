@@ -24,7 +24,6 @@ void set_command(t_lem_in *lem_in, char *line, int room_id)
 
 int	open_map(char *map_path)
 {
-    (void)map_path;
 	int	fd;
 
 	fd = open(map_path, O_RDONLY);

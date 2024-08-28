@@ -23,7 +23,13 @@ static int count_line(char *filename)
     if (fd < 0)
         return (-1);
     line = get_next_line(fd);
-    while (line) {
+    if (!line)
+    {
+        close(fd);
+        return (-1);
+    }
+    while (line)
+    {
         if (!check_if_comment(line))
             count++;
         free(line);
@@ -109,7 +115,7 @@ t_array *get_data(char *filename)
     int fd;
     t_array *data;
 
-    data = NULL;//init_data(filename);
+    data = init_data(filename);
     if (!data)
         return (NULL);
     fd = open_map(filename);

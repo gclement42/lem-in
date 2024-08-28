@@ -22,6 +22,7 @@ bool                check_if_link(char *line);
 bool 				check_error_link(t_lem_in *lem_in, char **link_rooms);
 bool				check_is_valid_link(char **link_rooms);
 bool 				check_if_room_exist(t_lem_in *lem_in, char *room_name);
+bool                is_num(char *str);
 
 int                 count_n_links(char **data);
 int                 count_n_rooms(char **data);

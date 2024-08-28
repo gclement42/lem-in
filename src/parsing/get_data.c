@@ -13,6 +13,7 @@ static int count_line(char *filename)
     line = get_next_line(fd);
     if (!line)
     {
+        print_error("Empty file.\n");
         close(fd);
         return (-1);
     }
@@ -49,7 +50,7 @@ static t_array *init_data(char *filename)
     data = malloc(sizeof(t_array));
     if (!data)
         return (NULL);
-    data->size = 1;
+    data->size = 0;
     data->arr = malloc_arr(filename);
     if (!data->arr)
     {
@@ -62,9 +63,9 @@ static t_array *init_data(char *filename)
 
 static void read_data(t_array *data, int fd) 
 {
-    int i;
-    char *line;
-    char *trim_line;
+    int     i;
+    char    *line;
+    char    *trim_line;
 
     i = 0;
     line = get_next_line(fd);
@@ -72,6 +73,7 @@ static void read_data(t_array *data, int fd)
     data->arr[0] = ft_strdup(line);
     if (!data->arr[0])
         error_data("Malloc failed.\n", line, data, fd);
+    data->size++;
     while (line)
     {
         free(line);

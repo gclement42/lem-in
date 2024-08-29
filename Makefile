@@ -20,6 +20,8 @@ SRC			 			= main.c \
 							link.c\
 							free.c\
 							graphics/window.c\
+							graphics/key_handler.c\
+							graphics/camera.c\
 							parsing/get_data.c\
 							parsing/parsing_utils.c\
 							parsing/parse_data.c\

@@ -31,6 +31,7 @@ SRC			 			= main.c \
 							errors/fatal_errors_handler.c\
 							\
 							ants/init_ants.c\
+							ants/move_ants.c\
 
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)

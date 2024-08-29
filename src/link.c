@@ -10,8 +10,6 @@ static bool is_duplicate_link(char **links, size_t size, char *link)
 
 	while (i < size)
 	{
-		ft_printf("LINKS IN ARR: %s\n", links[i]);
-		ft_printf("LINK: %s\n", link);
 		if (ft_streq(links[i], link))
 			return (true);
 		i++;

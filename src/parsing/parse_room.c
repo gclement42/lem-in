@@ -24,7 +24,7 @@ static t_vector3 get_room_pos(char *line)
 
     pos.x = ft_atoi(split[1]);
     pos.y = ft_atoi(split[2]);
-    pos.z = generate_random_number(-10, 10);
+    pos.z = generate_random_number(-25, 25);
 
     ft_free_array(split);
     return (pos);

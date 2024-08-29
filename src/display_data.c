@@ -25,7 +25,7 @@ void display_data(t_lem_in *lem_in)
     i = 0;
 }
 
-void    display_info_rooms(t_lem_in *lem_in)
+void    display_info_rooms_links(t_lem_in *lem_in)
 {
     int i;
 
@@ -42,6 +42,22 @@ void    display_info_rooms(t_lem_in *lem_in)
     printf("----------------------------------\n");
 }
 
+void    display_info_rooms_status(t_lem_in *lem_in)
+{
+    int i;
+
+    i = 0;
+    printf("----------------------------------\n");
+
+    i = 0;
+    while (i < lem_in->n_rooms)
+    {
+        printf("\033[1;35mRoom #%d %s\033[0m is empty = %s\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].is_empty ? "true" : "false");
+        i++;
+    }
+    printf("----------------------------------\n");
+}
+
 void display_info_ants(t_lem_in *lem_in)
 {
     int i;
@@ -52,7 +68,7 @@ void display_info_ants(t_lem_in *lem_in)
     i = 0;
     while (i < lem_in->n_ants)
     {
-        printf("\033[1;32mAnt %d\033[0m is in room %s\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
+        printf("\033[1;32mAnt %d\033[0m is in \033[1;35mroom  %s\033[0m\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
         i++;
     }
     printf("----------------------------------\n");

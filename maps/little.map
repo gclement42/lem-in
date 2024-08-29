@@ -1,15 +1,15 @@
 5
 ##start
-a 9 0
+A 0 0
 ##end
-z 8 4 
-b 1 9
-c 7 9
-1 5 5
-##links
-a-b
-b-c
-#comment
-c-z
-a-z
-1-z
+Z 7 7
+B 2 2
+C 5 2
+D 2 5
+E 5 5
+A-B
+B-C
+B-D 
+D-E
+C-E
+E-Z

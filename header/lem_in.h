@@ -24,7 +24,8 @@ void        *ft_realloc(void *ptr, size_t size, size_t len);
 // ----------------------------- Display functions -----------------------------
 
 void        display_data(t_lem_in *lem_in);
-void        display_info_rooms(t_lem_in *lem_in);
+void        display_info_rooms_links(t_lem_in *lem_in);
+void        display_info_rooms_status(t_lem_in *lem_in);
 void        display_info_ants(t_lem_in *lem_in);
 
 #endif

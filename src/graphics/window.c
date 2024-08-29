@@ -68,6 +68,14 @@ void idle(void) {
     glutPostRedisplay();
 }
 
+void keyboard_listener(unsigned char key, int mouse_x, int mouse_y) {
+    (void)mouse_x;
+    (void)mouse_y;
+    if (key == 27) {
+        exit(0);
+    }
+}
+
 void init_window(int argc, char **argv, t_lem_in lem_in) {
     init_points(lem_in);
     glutInit(&argc, argv);
@@ -75,6 +83,7 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     glutInitWindowSize(1920, 1080);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Lem-in");
+    glutKeyboardFunc(keyboard_listener);
     glutDisplayFunc(draw);
     glutReshapeFunc(reshape);
     glutIdleFunc(idle);

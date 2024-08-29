@@ -53,12 +53,11 @@ void parse_links(t_lem_in *lem_in, t_array *data)
             continue;
         }
         link_rooms = ft_split(data->arr[*i], '-');
-        if (!check_error_link(lem_in, link_rooms))
+        if (!check_error_link(lem_in, link_rooms) || !set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1], data))
         {
             ft_free_array(link_rooms);
             fatal_errors_handler(lem_in, NULL, data);
         }
-        set_link_in_rooms(lem_in, link_rooms[0], link_rooms[1], data);
         free(link_rooms[0]);
         free(link_rooms[1]);
         free(link_rooms);

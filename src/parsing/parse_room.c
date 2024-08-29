@@ -36,6 +36,17 @@ static char *get_room_name(char *line)
     return (name);
 }
 
+static void set_command(t_lem_in *lem_in, char *line, int room_id)
+{
+    if (ft_strncmp(line, "##start", ft_strlen(line)) == 0)
+    {
+        lem_in->start = room_id;
+        lem_in->rooms[room_id].is_empty = false;
+    }
+    else if (ft_strncmp(line, "##end", ft_strlen(line)) == 0)
+        lem_in->end = room_id;
+}
+
 bool check_if_room(char *line)
 {
     if (check_if_link(line) || check_if_command(line))

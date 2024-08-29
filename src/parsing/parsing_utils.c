@@ -14,14 +14,6 @@ bool check_if_command(char *line)
     return (false);
 }
 
-void set_command(t_lem_in *lem_in, char *line, int room_id)
-{
-    if (ft_strncmp(line, "##start", ft_strlen(line)) == 0)
-        lem_in->start = room_id;
-    else if (ft_strncmp(line, "##end", ft_strlen(line)) == 0)
-        lem_in->end = room_id;
-}
-
 int	open_map(char *map_path)
 {
 	int	fd;

@@ -7,6 +7,8 @@
 
 #include "lem_in.h"
 
+#define pi 3.14159265359
+
 typedef struct s_camera {
 	t_vector3 center;
 	t_vector3 eye;

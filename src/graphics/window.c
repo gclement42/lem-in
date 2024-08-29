@@ -21,6 +21,34 @@ void init_points(t_lem_in lem_in) {
     size = lem_in.n_rooms;
 }
 
+void drawCilinder(t_vector3 start, t_vector3 end) {
+    float       length;
+    float       angle;
+    t_vector3   axis;
+    GLUquadric  *quad = gluNewQuadric();
+    gluQuadricNormals(quad, GLU_SMOOTH);
+
+    t_vector3 direction;
+    direction.x = end.x - start.x;
+    direction.y = end.y - start.y;
+    direction.z = end.z - start.z;
+
+    length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+    angle = acos(direction.y / length) * 180 / pi;
+
+    axis.x = -direction.y;
+    axis.y = direction.x;
+    axis.z = 0;
+
+    glPushMatrix();
+    glTranslatef(start.x, start.y, start.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
+    gluCylinder(quad, 0.1, 0.1, length, 20, 20);
+    glPopMatrix();
+
+    gluDeleteQuadric(quad);
+}
+
 
 static void draw(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -39,6 +67,9 @@ static void draw(void) {
         glTranslatef(points[i].pos.x, points[i].pos.y, points[i].pos.z);
         glutWireSphere(0.75, 20, 20);
         glPopMatrix();
+    }
+    for (int i = 1; i < size; i++) {
+        drawCilinder(points[i].pos, points[i - 1].pos);
     }
 
     glutSwapBuffers();

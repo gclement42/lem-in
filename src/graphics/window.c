@@ -6,14 +6,11 @@ int size = 0;
 void init_points(t_lem_in lem_in) {
     int i;
 
-    // Normalize points
     for (i = 0; i < lem_in.n_rooms; i++) {
         points[i].x = lem_in.rooms[i].pos.x;
         points[i].y = lem_in.rooms[i].pos.y;
         points[i].z = 0.0;
-		
     }
-
     size = lem_in.n_rooms;
 }
 
@@ -21,7 +18,6 @@ static void draw(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    // Calculate the centroid of the points
     float centroid_x = 0.0, centroid_y = 0.0, centroid_z = 0.0;
     for (int i = 0; i < size; i++) {
         centroid_x += points[i].x;
@@ -32,22 +28,21 @@ static void draw(void) {
     centroid_y /= size;
     centroid_z /= size;
 
-    // Set the camera position and aim at the centroid
     float camera_x = centroid_x;
     float camera_y = centroid_y;
-    float camera_z = centroid_z + 100; // Position the camera 20 units away from the centroid
+    float camera_z = centroid_z + 50;
 
-    gluLookAt(camera_x, camera_y, camera_z,  // position (x, y, z) of the eye
-              centroid_x, centroid_y, centroid_z,  // point aimed at
-              0.0, 1.0, 0.0);  // up vector
+    gluLookAt(camera_x, camera_y, camera_z,
+              centroid_x, centroid_y, centroid_z,
+              0.0, 1.0, 0.0);
 
-	glPointSize(5.0);
-    // Draw the points
-    glBegin(GL_POINTS);
     for (int i = 0; i < size; i++) {
-        glVertex3f(points[i].x, points[i].y, points[i].z);
+        glPushMatrix();
+        glColor4d(1.0, 1.0, 1.0, 1.0);
+        glTranslatef(points[i].x, points[i].y, points[i].z);
+        glutWireSphere(1.0, 20, 20);
+        glPopMatrix();
     }
-    glEnd();
 
     // Swap buffers
     glutSwapBuffers();

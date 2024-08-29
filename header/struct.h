@@ -29,7 +29,7 @@ typedef struct s_room
     char        *name;
     bool        is_empty;
     t_array     links;
-    t_vector2    pos;
+    t_vector3    pos;
 }               t_room;
 
 

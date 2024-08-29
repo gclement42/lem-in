@@ -9,7 +9,7 @@ void init_points(t_lem_in lem_in) {
     for (i = 0; i < lem_in.n_rooms; i++) {
         points[i].x = lem_in.rooms[i].pos.x;
         points[i].y = lem_in.rooms[i].pos.y;
-        points[i].z = 0.0;
+        points[i].z = lem_in.rooms[i].pos.z;
     }
     size = lem_in.n_rooms;
 }

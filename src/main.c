@@ -38,6 +38,7 @@ int main(int argc, char **argv)
     if (!check_arguments(argc, argv[1]))
         return (EXIT_FAILURE);
 
+    srand(time(NULL));
     data = get_data(argv[1]);
     if (!data)
         return (EXIT_FAILURE);

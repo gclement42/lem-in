@@ -7,6 +7,7 @@
 # include <string.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <time.h>
 
 # include "../libft/include/libft.h"
 # include "struct.h"

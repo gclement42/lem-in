@@ -43,8 +43,9 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     lem_in = parse_data(data);
     init_ants(&lem_in);
-    display_data(&lem_in);
-    display_info_rooms(&lem_in);
+
+    move_ants_manager(&lem_in);
+    
     free_lem_in(&lem_in);
     return (EXIT_SUCCESS);
 }

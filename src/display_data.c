@@ -33,14 +33,13 @@ void    display_info_rooms(t_lem_in *lem_in)
     printf("----------------------------------\n");
 
     i = 0;
-    printf("\n");
     while (i < lem_in->n_rooms)
     {
         printf("\033[1;35mRoom %s\033[0m is linked to :\n", lem_in->rooms[i].name);
         ft_print_array(lem_in->rooms[i].links.arr);
         i++;
     }
-    printf("\n----------------------------------\n");
+    printf("----------------------------------\n");
 }
 
 void display_info_ants(t_lem_in *lem_in)
@@ -51,11 +50,10 @@ void display_info_ants(t_lem_in *lem_in)
     printf("----------------------------------\n");
 
     i = 0;
-    printf("\n");
     while (i < lem_in->n_ants)
     {
-        printf("\033[1;35mAnt %d\033[0m is in room %s\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
+        printf("\033[1;32mAnt %d\033[0m is in room %s\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
         i++;
     }
-    printf("\n----------------------------------\n");
+    printf("----------------------------------\n");
 }

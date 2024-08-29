@@ -8,7 +8,7 @@ static t_vector get_room_pos(char *line)
     split = ft_split(line, ' ');
     if (!split)
     {
-        print_error("Split failed.\n");
+        print_error(ERR_SPLIT);
         return ((t_vector){-1, -1});
     }
     if (ft_array_len(split) != 3 || !is_num(split[1]) || !is_num(split[2]))

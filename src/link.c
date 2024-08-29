@@ -58,7 +58,7 @@ static void *add_link(t_array *links, char *link)
 	dup_link = ft_strdup(link);
 	if (!dup_link)
 	{
-		print_error("Malloc error.\n");
+		print_error(ERR_MALLOC);
 		return (NULL);
 	}
 
@@ -66,7 +66,7 @@ static void *add_link(t_array *links, char *link)
 	char **tmp = (char **)ft_realloc(links->arr, sizeof(char *), links->size + 1);
 	if (!tmp)
 	{
-		print_error("Malloc error.\n");
+		print_error(ERR_MALLOC);
 		return (NULL);
 	}
 

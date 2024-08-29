@@ -16,7 +16,7 @@ static bool check_error_link(t_lem_in *lem_in, char **link_rooms)
 {
     if (!link_rooms)
     {
-        print_error("Split failed.\n");
+        print_error(ERR_SPLIT);
         return (false);
     }
     if (!check_is_valid_link(link_rooms))

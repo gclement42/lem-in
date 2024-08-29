@@ -72,7 +72,7 @@ static void read_data(t_array *data, int fd)
 
     data->arr[0] = ft_strdup(line);
     if (!data->arr[0])
-        error_data("Malloc failed.\n", line, data, fd);
+        error_data(ERR_MALLOC, line, data, fd);
     data->size++;
     while (line)
     {
@@ -91,7 +91,7 @@ static void read_data(t_array *data, int fd)
         if (!data->arr[i])
         {
             free(trim_line);
-            error_data("Malloc failed.\n", line, data, fd);
+            error_data(ERR_MALLOC, line, data, fd);
         }
         data->size++;
     }

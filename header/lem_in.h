@@ -21,6 +21,6 @@
 
 void        display_data(t_lem_in *lem_in);
 void        *ft_realloc(void *ptr, size_t size, size_t len);
-void        print_info_ants(t_lem_in *lem_in);
+void        display_info_ants(t_lem_in *lem_in);
 
 #endif

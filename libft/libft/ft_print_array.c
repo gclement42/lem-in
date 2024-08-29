@@ -21,7 +21,7 @@ void	ft_print_array(char **array)
 		return ;
 	while (array[i])
 	{
-		ft_printf("[%d] =%s\n", i, array[i]);
+		ft_printf("[%d] = %s\n", i, array[i]);
 		i++;
 	}
 	ft_printf("\n");

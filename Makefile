@@ -19,6 +19,7 @@ SRC			 			= main.c \
 							room.c\
 							link.c\
 							free.c\
+							display_data.c\
 							\
 							parsing/get_data.c\
 							parsing/parsing_utils.c\

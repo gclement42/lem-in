@@ -14,39 +14,20 @@ void keyboard_listener(unsigned char key, int x, int y) {
 void special_keyboard_listener(int key, int x, int y) {
     (void)x;
     (void)y;
-	float *rotation_angle;
-
-	rotation_angle = get_rotation_angle();
-    if (key == GLUT_KEY_LEFT) 
-    {
-        *rotation_angle = *rotation_angle - 0.1f;
-        if (*rotation_angle < 0) {
-            *rotation_angle = *rotation_angle + (2 * M_PI);
-        }
-    } 
-    else if (key == GLUT_KEY_RIGHT) 
-    {
-        *rotation_angle = *rotation_angle + 0.1f;
-        if (*rotation_angle < 0) {
-            *rotation_angle += *rotation_angle + (2 * M_PI);
-        }
-    }
+	if (key == GLUT_KEY_UP)
+		move_camera((t_vector3){-0.5f, 0, 0});
+	else if (key == GLUT_KEY_DOWN)
+		move_camera((t_vector3){0.5f, 0, 0});
+	else if (key == GLUT_KEY_LEFT)
+		move_camera((t_vector3){0, 0, -0.5f});
+	else if (key == GLUT_KEY_RIGHT)
+		move_camera((t_vector3){0, 0, 0.5f});
     glutPostRedisplay();
 }
 
 void mouse_motion_listener(int x, int y) {
 	if (mouse_state == 1) {
-		int dx;
-		float *rotation_angle;
-
-		dx = x - last_mouse_pos.x;
-		rotation_angle = get_rotation_angle();
-		*rotation_angle += dx * 0.01f;
-		if (*rotation_angle > 2 * M_PI) {
-			*rotation_angle -= 2 * M_PI;
-		} else if (*rotation_angle < 0) {
-			*rotation_angle += 2 * M_PI;
-		}
+		rotate_camera(x - last_mouse_pos.x, y - last_mouse_pos.y);
 		glutPostRedisplay();
 	}
 	last_mouse_pos = (t_vector2){x, y};

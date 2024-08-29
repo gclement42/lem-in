@@ -61,11 +61,6 @@ void reshape(int largeur, int hauteur) {
 }
 
 void idle(void) {
-    // rotation_angle += 0.01f;
-    // if (rotation_angle > 2 * M_PI) {
-    //     rotation_angle -= 2 * M_PI;
-    // }
-    setup_camera(points, size);
     glutPostRedisplay();
 }
 

@@ -79,6 +79,8 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     glutCreateWindow("Lem-in");
     glutKeyboardFunc(keyboard_listener);
     glutSpecialFunc(special_keyboard_listener);
+    glutMouseFunc(mouse_listener);
+    glutMotionFunc(mouse_motion_listener);
     glutDisplayFunc(draw);
     glutReshapeFunc(reshape);
     glutIdleFunc(idle); // Enregistrer la fonction idle

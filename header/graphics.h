@@ -31,5 +31,7 @@ void keyboard_listener(unsigned char key, int x, int y);
 void setup_camera(t_sphere *points, int size);
 float *get_rotation_angle();
 t_camera get_camera();
+void mouse_listener(int button, int state, int x, int y);
+void mouse_motion_listener(int x, int y);
 
 #endif

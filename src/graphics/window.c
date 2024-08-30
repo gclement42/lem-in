@@ -21,31 +21,30 @@ void init_points(t_lem_in lem_in) {
     size = lem_in.n_rooms;
 }
 
-void drawCilinder(t_vector3 start, t_vector3 end) {
-    float       length;
-    float       angle;
-    t_vector3   axis;
-    GLUquadric  *quad = gluNewQuadric();
-    gluQuadricNormals(quad, GLU_SMOOTH);
-
-    t_vector3 direction;
-    direction.x = end.x - start.x;
-    direction.y = end.y - start.y;
-    direction.z = end.z - start.z;
-
-    length = sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
-    angle = acos(direction.y / length) * 180 / pi;
-
-    axis.x = -direction.y;
-    axis.y = direction.x;
-    axis.z = 0;
-
+void draw_cylinder(t_vector3 p1, t_vector3 p2, float radius) {
+    GLUquadric *quad = gluNewQuadric();
+    
+    // Calculer le vecteur entre les deux points
+    t_vector3 dir = {p2.x - p1.x, p2.y - p1.y, p2.z - p1.z};
+    
+    // Calculer la longueur du vecteur (distance entre les deux sphères)
+    float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+    
+    // Calculer l'angle et l'axe de rotation pour orienter le cylindre
     glPushMatrix();
-    glTranslatef(start.x, start.y, start.z);
-    glRotatef(angle, axis.x, axis.y, axis.z);
-    gluCylinder(quad, 0.1, 0.1, length, 20, 20);
-    glPopMatrix();
+    glTranslatef(p1.x, p1.y, p1.z);
 
+    // Calcul de l'angle de rotation
+    float angle = acos(dir.z / length) * 180.0 / M_PI;
+
+    // Déterminer l'axe de rotation
+    glRotatef(angle, -dir.y, dir.x, 0.0);
+    
+    // Dessiner le cylindre
+    gluCylinder(quad, radius, radius, length, 20, 20);
+    
+    glPopMatrix();
+    
     gluDeleteQuadric(quad);
 }
 
@@ -54,7 +53,6 @@ static void draw(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-
     t_camera camera = get_camera();
     gluLookAt(
         camera.eye.x, camera.eye.y, camera.eye.z,
@@ -62,16 +60,19 @@ static void draw(void) {
         camera.up.x, camera.up.y, camera.up.z);
 
     for (int i = 0; i < size; i++) {
+        // Dessiner les sphères
         glPushMatrix();
         glColor4d(points[i].color.r, points[i].color.g, points[i].color.b, points[i].color.o);
         glTranslatef(points[i].pos.x, points[i].pos.y, points[i].pos.z);
         glutWireSphere(0.75, 20, 20);
         glPopMatrix();
+        
+        // Si ce n'est pas la première sphère, dessiner un cylindre entre cette sphère et la précédente
+        if (i > 0) {
+            glColor4d(1.0, 1.0, 1.0, 1.0); // Couleur du cylindre
+            draw_cylinder(points[i - 1].pos, points[i].pos, 0.2f); // Rayon du cylindre
+        }
     }
-    for (int i = 1; i < size; i++) {
-        drawCilinder(points[i].pos, points[i - 1].pos);
-    }
-
     glutSwapBuffers();
 }
 
@@ -100,7 +101,7 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     setup_camera(points, size);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(1920, 1080);
+    glutInitWindowSize(800, 600);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Lem-in");
     glutKeyboardFunc(keyboard_listener);

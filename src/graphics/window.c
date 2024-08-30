@@ -4,6 +4,17 @@
 t_sphere points[1000];
 int size = 0;
 
+t_vector3 *get_links(t_lem_in lem_in, t_array *links) {
+    t_vector3 *res = malloc(sizeof(t_vector3) * links->size);
+    size_t i = 0;
+    while (i < links->size) {
+        t_room *room = get_room(&lem_in, links->arr[i]);
+        res[i] = (t_vector3){room->pos.x, room->pos.y, room->pos.z};
+        i++;
+    }
+    return res;
+}
+
 void init_points(t_lem_in lem_in) {
     int i;
 
@@ -17,6 +28,8 @@ void init_points(t_lem_in lem_in) {
             points[i].color = (t_color){0.0, 1.0, 0.0, 1.0};
         else
             points[i].color = (t_color){1.0, 1.0, 1.0, 1.0};
+        points[i].links = get_links(lem_in, &lem_in.rooms[i].links);
+        points[i].links_size = lem_in.rooms[i].links.size;
     }
     size = lem_in.n_rooms;
 }
@@ -24,23 +37,18 @@ void init_points(t_lem_in lem_in) {
 void draw_cylinder(t_vector3 p1, t_vector3 p2, float radius) {
     GLUquadric *quad = gluNewQuadric();
     
-    // Calculer le vecteur entre les deux points
     t_vector3 dir = {p2.x - p1.x, p2.y - p1.y, p2.z - p1.z};
     
-    // Calculer la longueur du vecteur (distance entre les deux sphères)
     float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
     
-    // Calculer l'angle et l'axe de rotation pour orienter le cylindre
     glPushMatrix();
+    glColor4d(1.0, 1.0, 1.0, 1.0);
     glTranslatef(p1.x, p1.y, p1.z);
 
-    // Calcul de l'angle de rotation
     float angle = acos(dir.z / length) * 180.0 / M_PI;
 
-    // Déterminer l'axe de rotation
     glRotatef(angle, -dir.y, dir.x, 0.0);
     
-    // Dessiner le cylindre
     gluCylinder(quad, radius, radius, length, 20, 20);
     
     glPopMatrix();
@@ -60,17 +68,14 @@ static void draw(void) {
         camera.up.x, camera.up.y, camera.up.z);
 
     for (int i = 0; i < size; i++) {
-        // Dessiner les sphères
         glPushMatrix();
         glColor4d(points[i].color.r, points[i].color.g, points[i].color.b, points[i].color.o);
         glTranslatef(points[i].pos.x, points[i].pos.y, points[i].pos.z);
         glutWireSphere(0.75, 20, 20);
         glPopMatrix();
-        
-        // Si ce n'est pas la première sphère, dessiner un cylindre entre cette sphère et la précédente
-        if (i > 0) {
-            glColor4d(1.0, 1.0, 1.0, 1.0); // Couleur du cylindre
-            draw_cylinder(points[i - 1].pos, points[i].pos, 0.2f); // Rayon du cylindre
+
+        for (size_t j = 0; j < points[i].links_size; j++) {
+            draw_cylinder(points[i].pos, points[i].links[j], 0.1);
         }
     }
     glutSwapBuffers();

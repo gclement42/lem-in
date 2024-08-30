@@ -23,8 +23,10 @@ typedef struct color {
 }			t_color;
 
 typedef struct s_sphere {
-	t_vector3 pos;
-	t_color color;
+	t_vector3	pos;
+	t_vector3	*links;
+	size_t		links_size;
+	t_color		color;
 }			t_sphere;
 
 void init_window(int argc, char **argv, t_lem_in lem_in);

@@ -11,19 +11,64 @@ void keyboard_listener(unsigned char key, int x, int y) {
     }
 }
 
+t_vector3 calc_forward(t_camera camera) {
+	t_vector3 forward;	
+	forward.x = camera.center.x - camera.eye.x;
+	forward.y = camera.center.y - camera.eye.y;
+	forward.z = camera.center.z - camera.eye.z;
+	float forward_length = sqrt(forward.x * forward.x + forward.y * forward.y + forward.z * forward.z);
+	forward.x /= forward_length;
+	forward.y /= forward_length;
+	forward.z /= forward_length;
+	return forward;
+}
+
+t_vector3 calc_right(t_camera camera, t_vector3 forward) {
+    t_vector3 right = {
+        forward.y * camera.up.z - forward.z * camera.up.y,
+        forward.z * camera.up.x - forward.x * camera.up.z,
+        forward.x * camera.up.y - forward.y * camera.up.x
+    };
+
+    float right_length = sqrt(right.x * right.x + right.y * right.y + right.z * right.z);
+    right.x /= right_length;
+    right.y /= right_length;
+    right.z /= right_length;
+	return right;
+}
+
 void special_keyboard_listener(int key, int x, int y) {
     (void)x;
     (void)y;
-	if (key == GLUT_KEY_UP)
-		move_camera((t_vector3){-0.5f, 0, 0});
-	else if (key == GLUT_KEY_DOWN)
-		move_camera((t_vector3){0.5f, 0, 0});
-	else if (key == GLUT_KEY_LEFT)
-		move_camera((t_vector3){0, 0, -0.5f});
-	else if (key == GLUT_KEY_RIGHT)
-		move_camera((t_vector3){0, 0, 0.5f});
+
+    t_camera camera = get_camera();
+	t_vector3 forward = calc_forward(camera);
+	t_vector3 right = calc_right(camera, forward);
+
+    t_vector3 move = {0, 0, 0};
+
+    if (key == GLUT_KEY_UP) {
+        move.x = forward.x * 0.5f;
+        move.y = forward.y * 0.5f;
+        move.z = forward.z * 0.5f;
+    } else if (key == GLUT_KEY_DOWN) {
+        move.x = -forward.x * 0.5f;
+        move.y = -forward.y * 0.5f;
+        move.z = -forward.z * 0.5f;
+    } else if (key == GLUT_KEY_LEFT) {
+        move.x = -right.x * 0.5f;
+        move.y = -right.y * 0.5f;
+        move.z = -right.z * 0.5f;
+    } else if (key == GLUT_KEY_RIGHT) {
+        move.x = right.x * 0.5f;
+        move.y = right.y * 0.5f;
+        move.z = right.z * 0.5f;
+    }
+
+    move_camera(move);
     glutPostRedisplay();
 }
+
 
 void mouse_motion_listener(int x, int y) {
 	if (mouse_state == 1) {

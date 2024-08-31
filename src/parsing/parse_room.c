@@ -43,7 +43,7 @@ static char *get_room_name(char *line)
     return (name);
 }
 
-static void set_command(t_lem_in *lem_in, char *line, int room_id)
+void set_command(t_lem_in *lem_in, char *line, int room_id)
 {
     if (ft_strncmp(line, "##start", ft_strlen(line)) == 0)
     {

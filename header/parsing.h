@@ -24,7 +24,7 @@ bool                is_num(char *str);
 int                 count_n_rooms(char **data);
 void                set_room(t_room *room, int id, char *name, t_vector3 pos);
 void 				set_command(t_lem_in *lem_in, char *line, int room_id);
-void                set_room(t_room *room, int id, char *name, t_vector pos);
+void                set_room(t_room *room, int id, char *name, t_vector3 pos);
 void                full_gnl_loop(int fd);
 
 

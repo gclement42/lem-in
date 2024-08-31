@@ -37,8 +37,6 @@ void rotate_camera(int x, int y)
 
     if (vertical_angle > 2 * pi) {
         vertical_angle -= 2 * pi;
-    } else if (vertical_angle < 0) {
-        vertical_angle += 2 * pi;
     }
 
 	camera.eye.x = camera.center.x + radius * cos(rotation_angle);

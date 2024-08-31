@@ -23,6 +23,6 @@ void parse_nb_ants(t_lem_in *lem_in, t_array *data)
     nb_ants = ft_atoi(data->arr[i]);
     if (nb_ants <= 0)
         fatal_errors_handler(lem_in, "Invalid number of ants.\n", data);
-    lem_in->ants = nb_ants;
+    lem_in->n_ants = nb_ants;
     data->index = i + 1;
 }

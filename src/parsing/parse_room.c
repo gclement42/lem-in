@@ -13,7 +13,7 @@ static t_vector3 get_room_pos(char *line)
     split = ft_split(line, ' ');
     if (!split)
     {
-        print_error("Split failed.\n");
+        print_error(ERR_SPLIT);
         return ((t_vector3){-1, -1, -1});
     }
     if (ft_array_len(split) != 3 || !is_num(split[1]) || !is_num(split[2]))
@@ -41,6 +41,17 @@ static char *get_room_name(char *line)
     name = ft_substr(line, 0, i);
 
     return (name);
+}
+
+static void set_command(t_lem_in *lem_in, char *line, int room_id)
+{
+    if (ft_strncmp(line, "##start", ft_strlen(line)) == 0)
+    {
+        lem_in->start = room_id;
+        lem_in->rooms[room_id].is_empty = false;
+    }
+    else if (ft_strncmp(line, "##end", ft_strlen(line)) == 0)
+        lem_in->end = room_id;
 }
 
 bool check_if_room(char *line)

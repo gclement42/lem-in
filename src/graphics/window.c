@@ -53,11 +53,11 @@ void init_ants_sphere(t_lem_in lem_in) {
 void update(int value) 
 {
     (void) value;
-    float speed = 0.1f;
+    float speed = 0.01f;
     for (int i = 0; i < ants_size; i++)
     {
-        t_room *room = g_lem_in->ants[i].room;
-        t_vector3 dir = {room->pos.x - ants[i].pos.x, room->pos.y - ants[i].pos.y, room->pos.z - ants[i].pos.z};
+        t_room room = g_lem_in->rooms[g_lem_in->end];
+        t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
         if (length > 0.1f)
         {
@@ -126,6 +126,7 @@ static void draw(void) {
         // printf("Ant %d is in room %s\n", g_lem_in->ants[i].id, g_lem_in->ants[i].room->name);
         draw_sphere(ants[i].pos, 0.40, ants[i].color);
     }
+    update(0);
     glutSwapBuffers();
 }
 

@@ -10,6 +10,7 @@ void    move_ants_manager(t_lem_in *lem_in)
     display_info_rooms_status(lem_in);
     display_info_ants(lem_in);
     move_ants(lem_in);
+    display_info_rooms_status(lem_in);
 }
 
 static bool is_next_room_empty(t_lem_in *lem_in, char *room_name)
@@ -20,8 +21,7 @@ static bool is_next_room_empty(t_lem_in *lem_in, char *room_name)
         {
             if (lem_in->rooms[i].is_empty)
                 return (true);
-            else
-                return (false);
+            return (false);
         }
     }
     return (false);
@@ -30,6 +30,8 @@ static bool is_next_room_empty(t_lem_in *lem_in, char *room_name)
 
 static void    move_ants(t_lem_in *lem_in)
 {
+    t_room      *tmp_room;
+
     for (int i = 0; i < lem_in->n_ants; i++)
     {
         for (size_t j = 0; j < lem_in->ants[i].room->links.size; j++)
@@ -38,6 +40,8 @@ static void    move_ants(t_lem_in *lem_in)
             if (is_next_room_empty(lem_in, lem_in->ants[i].room->links.arr[j]))
             {
                 printf("next empty room name = %s\n", lem_in->ants[i].room->links.arr[j]);
+                tmp_room = get_room(lem_in, lem_in->ants[i].room->links.arr[j]);
+                tmp_room->is_empty = false;
             }
         }
     }

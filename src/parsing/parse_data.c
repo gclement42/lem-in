@@ -1,5 +1,20 @@
 #include "lem_in.h"
 
+static bool     init_lem_in(t_lem_in *lem_in, char **data);
+
+t_lem_in parse_data(t_array *data)
+{  
+    t_lem_in    lem_in;
+
+    init_lem_in(&lem_in, data->arr);
+    parse_nb_ants(&lem_in, data);
+    parse_rooms(&lem_in, data);
+    parse_links(&lem_in, data);
+    free_array(data);
+    free(data);
+    return (lem_in);
+}
+
 static bool init_lem_in(t_lem_in *lem_in, char **data)
 {
     lem_in->ants = 0;
@@ -13,17 +28,4 @@ static bool init_lem_in(t_lem_in *lem_in, char **data)
         return (false);
     
     return (true);
-}
-
-t_lem_in parse_data(t_array *data)
-{  
-    t_lem_in    lem_in;
-
-    init_lem_in(&lem_in, data->arr);
-    parse_nb_ants(&lem_in, data);
-    parse_rooms(&lem_in, data);
-    parse_links(&lem_in, data);
-    free_array(data);
-    free(data);
-    return (lem_in);
 }

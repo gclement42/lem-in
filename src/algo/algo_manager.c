@@ -2,5 +2,6 @@
 
 void    algo_manager(t_lem_in *lem_in)
 {
+    (void)lem_in;
     return ;
 }

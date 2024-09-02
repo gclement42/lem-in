@@ -44,19 +44,26 @@ void init_ants_sphere(t_lem_in lem_in) {
         ants[i].pos.x = lem_in.rooms[lem_in.start].pos.x;
         ants[i].pos.y = lem_in.rooms[lem_in.start].pos.y;
         ants[i].pos.z = lem_in.rooms[lem_in.start].pos.z;
-        ants[i].color = (t_color){1.0, 0.0, 0.0, 1.0};
+        ants[i].color = (t_color){1.0, 1.0, 0.0, 1.0};
     }
-    printf("Ants size: %d\n", lem_in.n_ants);
     ants_size = lem_in.n_ants;
+}
+
+bool check_if_all_ants_in_end(t_lem_in *lem_in) {
+    for (int i = 0; i < lem_in->n_ants; i++) {
+        if (lem_in->ants[i].room->id != lem_in->end)
+            return false;
+    }
+    return true;
 }
 
 void update(int value) 
 {
-    (void) value;
-    float speed = 0.01f;
+    float speed = 0.1f;
+    int count = 0;
     for (int i = 0; i < ants_size; i++)
     {
-        t_room room = g_lem_in->rooms[g_lem_in->end];
+        t_room room = *g_lem_in->ants[i].room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
         if (length > 0.1f)
@@ -65,7 +72,19 @@ void update(int value)
             ants[i].pos.y += dir.y / length * speed;
             ants[i].pos.z += dir.z / length * speed;
         }
+        else {
+            ants[i].pos = room.pos;
+            count++;
+        }
     }
+    if (count == ants_size) {
+        if (check_if_all_ants_in_end(g_lem_in)) {
+            printf("All ants are in end\n");
+            return;
+        }
+        move_ants_manager(g_lem_in);
+    }
+    glutTimerFunc(value, update, value);
 }
 
 void draw_cylinder(t_vector3 p1, t_vector3 p2, float radius) {
@@ -126,7 +145,6 @@ static void draw(void) {
         // printf("Ant %d is in room %s\n", g_lem_in->ants[i].id, g_lem_in->ants[i].room->name);
         draw_sphere(ants[i].pos, 0.40, ants[i].color);
     }
-    update(0);
     glutSwapBuffers();
 }
 
@@ -148,13 +166,14 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
+    size_t timer =  1;
     g_lem_in = &lem_in;
     init_rooms(lem_in);
     init_ants_sphere(lem_in);
     setup_camera(rooms, size);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(800, 600);
+    glutInitWindowSize(1920, 1080);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Lem-in");
     glutKeyboardFunc(keyboard_listener);
@@ -163,6 +182,8 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     glutMotionFunc(mouse_motion_listener);
     glutDisplayFunc(draw);
     glutReshapeFunc(reshape);
-    glutIdleFunc(idle); // Enregistrer la fonction idle
+    glutIdleFunc(idle);
+    move_ants_manager(g_lem_in);
+    glutTimerFunc(timer, update, timer);
     glutMainLoop();
 }

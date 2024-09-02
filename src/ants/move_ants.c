@@ -36,7 +36,7 @@ static void    move_ants(t_lem_in *lem_in)
     {
         for (size_t j = 0; j < lem_in->ants[i].room->links.size; j++)
         {
-            printf("ant %d\n", i);
+            printf("ant %d\n", lem_in->ants[i].id);
             if (is_next_room_empty(lem_in, lem_in->ants[i].room->links.arr[j]))
             {
                 printf("next empty room name = %s\n", lem_in->ants[i].room->links.arr[j]);
@@ -45,6 +45,7 @@ static void    move_ants(t_lem_in *lem_in)
                 next_room = get_room(lem_in, lem_in->ants[i].room->links.arr[j]);
                 next_room->is_empty = false;
                 lem_in->ants[i].room = next_room;
+                break ;
             }
         }
     }

@@ -59,13 +59,14 @@ bool check_if_all_ants_in_end(t_lem_in *lem_in) {
 
 void update(int value) 
 {
-    float speed = 0.1f;
-    int count = 0;
+    float   speed;
+    int     count = 0;
     for (int i = 0; i < ants_size; i++)
     {
         t_room room = *g_lem_in->ants[i].room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+        speed = length / 15;
         if (length > 0.1f)
         {
             ants[i].pos.x += dir.x / length * speed;

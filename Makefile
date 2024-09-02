@@ -19,14 +19,23 @@ SRC			 			= main.c \
 							room.c\
 							link.c\
 							free.c\
+							graphics/window.c\
+							graphics/key_handler.c\
+							graphics/camera.c\
+							display_data.c\
+							\
 							parsing/get_data.c\
 							parsing/parsing_utils.c\
 							parsing/parse_data.c\
 							parsing/parse_room.c\
 							parsing/parse_link.c\
 							parsing/parse_ant.c\
+							\
 							errors/print_error.c\
 							errors/fatal_errors_handler.c\
+							\
+							ants/init_ants.c\
+							ants/move_ants.c\
 
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)
@@ -35,14 +44,16 @@ LIBFT					= libft.a
 LIB_DIR					= libft/
 
 GCC						= gcc
-CFLAGS					= -Wall -Wextra -Werror
+CFLAGS					= -Wall -Wextra -Werror -I/usr/include -O3 -c
+
+LDFLAGS					= -L/usr/lib -lGLEW -lGL -lGLU -lglut -lm
 
 RM 						= rm -rf
 CLEAR					= clear
 
 $(BUILD_DIR)%.o:		$(DIR)%.c $(LIB_DIR) $(HEADER_DIR)/$(HEADER_FILE)
 							@mkdir -p $(@D)
-							$(GCC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIB_DIR) -I/usr/include -O3 -c $< -o $@ -g
+							$(GCC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIB_DIR) $< -o $@ -g
 
 all: 					clear mkbuild lib $(HEADER_DIR) $(NAME) 
 							@echo "$(GREEN)[LEM-IN IS READY] $(END)"
@@ -54,7 +65,7 @@ clear:
 							$(CLEAR)
 						
 $(NAME): 				$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
-							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT)
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) $(LDFLAGS)
 							
 lib:
 							@make -C $(LIB_DIR)
@@ -75,7 +86,7 @@ norm:
 							@norminette $(DIR)
 
 sanit:					$(OBJECTS) $(LIB_DIR)$(LIBFT) libft
-							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) -fsanitize=address
+							@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT) $(LDFLAGS) -fsanitize=address
 
 re:						fclean all
 							$(MAKE) all

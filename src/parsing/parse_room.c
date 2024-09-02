@@ -1,24 +1,31 @@
 #include "lem_in.h"
 
-static t_vector get_room_pos(char *line)
+static int generate_random_number(int min, int max) {
+    return (rand() % (max - min + 1)) + min;
+}
+
+
+static t_vector3 get_room_pos(char *line)
 {
-    t_vector        pos;
+    t_vector3       pos;
     char            **split;
 
     split = ft_split(line, ' ');
     if (!split)
     {
-        print_error("Split failed.\n");
-        return ((t_vector){-1, -1});
+        print_error(ERR_SPLIT);
+        return ((t_vector3){-1, -1, -1});
     }
     if (ft_array_len(split) != 3 || !is_num(split[1]) || !is_num(split[2]))
     {
         ft_free_array(split);
-        return ((t_vector){-1, -1});
+        return ((t_vector3){-1, -1, -1});
     }
 
     pos.x = ft_atoi(split[1]);
     pos.y = ft_atoi(split[2]);
+    pos.z = generate_random_number(-5, 5);
+
     ft_free_array(split);
     return (pos);
 }
@@ -34,6 +41,17 @@ static char *get_room_name(char *line)
     name = ft_substr(line, 0, i);
 
     return (name);
+}
+
+void set_command(t_lem_in *lem_in, char *line, int room_id)
+{
+    if (ft_strncmp(line, "##start", ft_strlen(line)) == 0)
+    {
+        lem_in->start = room_id;
+        lem_in->rooms[room_id].is_empty = false;
+    }
+    else if (ft_strncmp(line, "##end", ft_strlen(line)) == 0)
+        lem_in->end = room_id;
 }
 
 bool check_if_room(char *line)
@@ -77,7 +95,7 @@ void parse_rooms(t_lem_in *lem_in, t_array *data)
             *i += 1;
             continue;
         }
-        t_vector room_pos = get_room_pos(data->arr[*i]);
+        t_vector3 room_pos = get_room_pos(data->arr[*i]);
         if (room_pos.x < 0 || room_pos.y < 0)
             fatal_errors_handler(lem_in, "Wrong room format.\n", data);
         char *room_name = get_room_name(data->arr[*i]);

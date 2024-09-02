@@ -3,11 +3,18 @@
 
 # include <stdbool.h>
 
-typedef struct s_vector
+typedef struct s_vector2
 {
     int         x;
     int         y;
-}               t_vector;
+}               t_vector2;
+
+typedef struct s_vector3
+{
+    float        x;
+    float        y;
+    float        z;
+}               t_vector3;
 
 typedef struct s_array
 {
@@ -22,9 +29,8 @@ typedef struct s_room
     char        *name;
     bool        is_empty;
     t_array     links;
-    t_vector    pos;
+    t_vector3    pos;
 }               t_room;
-
 
 typedef struct s_ant
 {
@@ -34,14 +40,14 @@ typedef struct s_ant
 
 typedef struct s_lem_in
 {
-    int         ants;
+    int         n_ants;
     int         start;
     int         end;
     int         n_rooms;
 
     t_room      *rooms;
+    t_ant       *ants;
 }               t_lem_in;
-
 
 
 #endif

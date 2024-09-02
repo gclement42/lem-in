@@ -17,6 +17,7 @@ void free_lem_in(t_lem_in *lem_in)
 		i++;
 	}
 	free(lem_in->rooms);
+	free(lem_in->ants);
 }
 
 void free_array(t_array *data)

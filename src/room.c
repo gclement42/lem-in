@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-void set_room(t_room *room, int id, char *name, t_vector pos)
+void set_room(t_room *room, int id, char *name, t_vector3 pos)
 {
     room->id = id;
     room->name = name;

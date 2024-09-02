@@ -3,7 +3,7 @@
 static int      count_line(char *filename); 
 static char     **malloc_arr(char *filename);
 static t_array  *init_data(char *filename);
-static void     read_data(t_array *data, int fd) ;
+static void     read_data(t_array *data, int fd);
 
 
 t_array *get_data(char *filename)

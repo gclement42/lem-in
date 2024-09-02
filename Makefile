@@ -36,6 +36,8 @@ SRC			 			= main.c \
 							\
 							ants/init_ants.c\
 							ants/move_ants.c\
+							\
+							algo/algo_manager.c\
 
 							
 OBJECTS			    	= $(SRC:%.c=$(BUILD_DIR)%.o)

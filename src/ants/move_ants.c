@@ -9,12 +9,7 @@ static void     write_ant_move(int ant_id, char *room_name);
 
 void    move_ants_manager(t_lem_in *lem_in)
 {
-    // display_data(lem_in);
-    // display_info_rooms_links(lem_in);
-    // display_info_rooms_status(lem_in);
-    // display_info_ants(lem_in);
     move_ants(lem_in);
-    // display_info_rooms_status(lem_in);
 }
 
 static void    move_ants(t_lem_in *lem_in)

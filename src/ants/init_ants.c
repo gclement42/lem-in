@@ -9,7 +9,7 @@ void init_ants(t_lem_in *lem_in)
     while (i < lem_in->n_ants)
     {
         lem_in->ants[i].id = i + 1;
-        lem_in->ants[i].room = &lem_in->rooms[lem_in->start];
+        lem_in->ants[i].path = lem_in->path;
         i++;
     }
 }

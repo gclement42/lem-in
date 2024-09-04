@@ -4,28 +4,6 @@ static bool     check_extension(char *filename);
 static bool     check_arguments(int argc, char *filename);
 
 
-int main(int argc, char **argv)
-{
-    t_array *data;
-    t_lem_in lem_in;
-
-    if (!check_arguments(argc, argv[1]))
-        return (EXIT_FAILURE);
-
-    srand(time(NULL));
-    data = get_data(argv[1]);
-    if (!data)
-        return (EXIT_FAILURE);
-    lem_in = parse_data(data);
-    // display_data(&lem_in);
-    init_ants(&lem_in);
-    init_window(argc, argv, lem_in);
-
-    move_ants_manager(&lem_in);
-    
-    free_lem_in(&lem_in);
-    return (EXIT_SUCCESS);
-}
 
 static bool check_extension(char *filename)
 {
@@ -57,3 +35,25 @@ static bool check_arguments(int argc, char *filename)
     return (true);
 }
 
+
+int main(int argc, char **argv)
+{
+    t_array *data;
+    t_lem_in lem_in;
+
+    if (!check_arguments(argc, argv[1]))
+        return (EXIT_FAILURE);
+
+    srand(time(NULL));
+    data = get_data(argv[1]);
+    if (!data)
+        return (EXIT_FAILURE);
+    lem_in = parse_data(data);
+    // display_data(&lem_in);
+    lem_in.path = algo_manager(&lem_in);
+    init_ants(&lem_in);
+    init_window(argc, argv, lem_in);
+    
+    free_lem_in(&lem_in);
+    return (EXIT_SUCCESS);
+}

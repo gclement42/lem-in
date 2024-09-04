@@ -1,7 +1,7 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere rooms[1000];
+t_sphere rooms[1000];//todo malloc this
 t_sphere ants[1000];
 t_lem_in *g_lem_in;
 int size = 0;
@@ -12,6 +12,10 @@ t_vector3 *get_links(t_lem_in lem_in, t_array *links) {
     size_t i = 0;
     while (i < links->size) {
         t_room *room = get_room(&lem_in, links->arr[i]);
+        if (!room) {
+            printf("Room %s not found\n", links->arr[i]);
+            exit(1);
+        }
         res[i] = (t_vector3){room->pos.x, room->pos.y, room->pos.z};
         i++;
     }
@@ -51,7 +55,7 @@ void init_ants_sphere(t_lem_in lem_in) {
 
 bool check_if_all_ants_in_end(t_lem_in *lem_in) {
     for (int i = 0; i < lem_in->n_ants; i++) {
-        if (lem_in->ants[i].room->id != lem_in->end)
+        if (lem_in->ants[i].path->room->id != lem_in->end)
             return false;
     }
     return true;
@@ -63,7 +67,7 @@ void update(int value)
     int     count = 0;
     for (int i = 0; i < ants_size; i++)
     {
-        t_room room = *g_lem_in->ants[i].room;
+        t_room room = *g_lem_in->ants[i].path->room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
         speed = length / 15;

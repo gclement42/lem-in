@@ -17,6 +17,7 @@
 # include "errors.h"
 # include "free.h"
 # include "graphics.h"
+# include "algo.h"
 
 # define NUM_POINTS 100
 # include "ants.h"
@@ -32,8 +33,5 @@ void        display_info_rooms_links(t_lem_in *lem_in);
 void        display_info_rooms_status(t_lem_in *lem_in);
 void        display_info_ants(t_lem_in *lem_in);
 
-// ----------------------------- Algo functions -----------------------------
-
-void        algo_manager(t_lem_in *lem_in);
 
 #endif

@@ -25,6 +25,7 @@
 // ----------------------------- Global utils -----------------------------
 
 void        *ft_realloc(void *ptr, size_t size, size_t len);
+bool 		next_room_is_end(t_lem_in *lem_in, t_ant *ant);
 
 // ----------------------------- Display functions -----------------------------
 

@@ -20,8 +20,9 @@ static void    move_ants(t_lem_in *lem_in)
         if (ants[i].path->room->id == lem_in->end)
             continue;
         next_room = ants[i].path->next->room;
-        if (next_room->id != lem_in->end && next_room->is_empty == false)
+        if (next_room->id != lem_in->end && next_room->is_empty == false) {
             continue;
+        }
         ants[i].path->room->is_empty = true;
         ants[i].path->room = next_room;
         next_room->is_empty = false;

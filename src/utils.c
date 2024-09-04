@@ -16,6 +16,13 @@ void *ft_realloc(void *ptr, size_t size, size_t len)
     return (new_ptr);
 }
 
+bool next_room_is_end(t_lem_in *lem_in, t_ant *ant)
+{
+    if (ant->path->room->id == lem_in->end)
+        return (true);
+    return (false);
+}
+
 t_node *create_node(t_room *room)
 {
     t_node *node;
@@ -44,8 +51,6 @@ void insert_node(t_node **head, t_node *node)
     while (tmp->next)
         tmp = tmp->next;
     tmp->next = node;
-    printf("tpm->next->room->name: %s\n", tmp->next->room->name);
-
 }
 
 void insert_at_start(t_node **head, t_node *node)
@@ -54,6 +59,16 @@ void insert_at_start(t_node **head, t_node *node)
         return ;
     node->next = *head;
     *head = node;
+}
+
+t_node *get_last_node(t_node *path)
+{
+    t_node *tmp;
+
+    tmp = path;
+    while (tmp->next)
+        tmp = tmp->next;
+    return (tmp);
 }
 
 void display_path(t_node *path)

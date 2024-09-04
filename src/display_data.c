@@ -68,7 +68,7 @@ void display_info_ants(t_lem_in *lem_in)
     i = 0;
     while (i < lem_in->n_ants)
     {
-        printf("\033[1;32mAnt %d\033[0m is in \033[1;35mroom  %s\033[0m\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
+        // printf("\033[1;32mAnt %d\033[0m is in \033[1;35mroom  %s\033[0m\n", lem_in->ants[i].id, lem_in->ants[i].room->name);
         i++;
     }
     printf("----------------------------------\n");

@@ -29,7 +29,8 @@ typedef struct s_room
     char        *name;
     bool        is_empty;
     t_array     links;
-    t_vector3    pos;
+    t_vector3   pos;
+    int         cost;
 }               t_room;
 
 typedef struct s_node
@@ -62,6 +63,7 @@ typedef struct s_lem_in
 void insert_node(t_node **head, t_node *node);
 t_node *create_node(t_room *room);
 void insert_at_start(t_node **head, t_node *node);
+t_node *get_last_node(t_node *path);
 void display_path(t_node *path);
 
 

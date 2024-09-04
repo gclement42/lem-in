@@ -2,7 +2,7 @@
 ##start
 A 0 0
 ##end
-Z 10 10
+Z 12 12
 B 0 4
 C 2 2
 D 4 0
@@ -13,6 +13,9 @@ H 4 6
 I 6 6
 J 8 8
 K 10 6
+X 10 4
+Y 10 2
+W 10 10
 A-B
 A-C
 A-D
@@ -23,5 +26,8 @@ E-H
 H-I
 I-J
 J-K
-J-Z
 D-G
+K-X
+X-Y
+J-W
+W-Z

@@ -27,17 +27,25 @@ static void calculate_all_rooms_cost(t_lem_in *lem_in)
         add_neighbor_in_open_lst(lem_in, &open_lst, &closed_lst);
         break;
     }
+    while (open_lst)
+    {
+        printf("open_lst: %s\n", ((t_room *)open_lst->content)->name);
+        open_lst = open_lst->next;
+    }
 }
 
 static void add_neighbor_in_open_lst(t_lem_in *lem_in, t_list **open_lst, t_list **closed_lst)
 {
     size_t i;
     t_room *neighbor;
+    t_list *node;
     t_room *room;
 
     i = 0;
-    room = (t_room *)(*open_lst)->content;
-    while (room->links[i] != -1)
+    node = ft_pop(open_lst);
+    room = (t_room *)node->content;
+    ft_lstadd_front(closed_lst, node);
+    while (room->links && room->links[i] != -1)
     {
         neighbor = &lem_in->rooms[room->links[i]];
         if (neighbor->cost > -1) {
@@ -49,6 +57,7 @@ static void add_neighbor_in_open_lst(t_lem_in *lem_in, t_list **open_lst, t_list
         i++;
     }
 }
+
 
 // static t_room *choose_next_room(t_lem_in *lem_in, t_room *room)
 // {

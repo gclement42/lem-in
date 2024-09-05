@@ -43,7 +43,7 @@ typedef struct s_node
 typedef struct s_ant
 {
     int         id;
-    t_node      *path;
+    t_room      *room;
 }               t_ant;
 
 

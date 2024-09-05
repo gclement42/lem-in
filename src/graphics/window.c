@@ -6,6 +6,7 @@ t_sphere ants[1000];
 t_lem_in *g_lem_in;
 int size = 0;
 int ants_size = 0;
+size_t iterations = 0;
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
@@ -84,9 +85,11 @@ void update(int value)
     }
     if (count == ants_size) {
         if (check_if_all_ants_in_end(g_lem_in)) {
+            // printf("All ants are in end with %ld iterations\n", iterations);
             return;
         }
         move_ants_manager(g_lem_in);
+        iterations++;
     }
     glutTimerFunc(value, update, value);
 }
@@ -170,7 +173,7 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer =  1;
+    size_t timer =  0;
     g_lem_in = &lem_in;
     init_rooms(lem_in);
     init_ants_sphere(lem_in);

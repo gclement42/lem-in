@@ -14,10 +14,6 @@ static void calculate_all_rooms_cost(t_lem_in *lem_in)
 
     room = &lem_in->rooms[lem_in->start];
     room->cost = reach_path(*lem_in, room);
-    for (int i = 0; i < lem_in->n_rooms; i++)
-    {
-        printf("Room %s cost: %d\n", lem_in->rooms[i].name, lem_in->rooms[i].cost);
-    }
 }
 
 static int reach_path(t_lem_in lem_in, t_room *room)

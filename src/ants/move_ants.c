@@ -3,6 +3,8 @@
 static void     move_ants(t_lem_in *lem_in);
 static void     write_ant_move(int ant_id, char *room_name);
 static t_room   *get_next_room(t_lem_in *lem_in, t_room *room);
+static t_room **get_most_valuable_room(t_lem_in *lem_in, int *links);
+static void   sort_by_cost(t_room **rooms, size_t size);
 
 
 void    move_ants_manager(t_lem_in *lem_in)
@@ -23,6 +25,8 @@ static void    move_ants(t_lem_in *lem_in)
         next_room = get_next_room(lem_in, ants[i].room);
         if (next_room->is_empty == false && next_room->id != lem_in->end)
             continue;
+        if (next_room->id == ants[i].room->id)
+            continue;
         ants[i].room->is_empty = true;
         next_room->is_empty = false;
         ants[i].room = next_room;
@@ -34,21 +38,67 @@ static void    move_ants(t_lem_in *lem_in)
 static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
 {
     t_room      *next_room;
-    t_room      *tmp;
+    t_room      **rooms_linked;
     size_t      i;
+    size_t      links_len;
 
-    i = 1;
-    if (!room->links)
+    i = 0;
+    if (!room->links) {
         return (room);
-    next_room = &lem_in->rooms[room->links[0]];
-    while (room->links[i] != -1)
+    }
+    links_len = get_links_size(room->links);
+    rooms_linked = get_most_valuable_room(lem_in, room->links);
+    while (i < links_len && i < 3)
     {
-        tmp = &lem_in->rooms[room->links[i]];
-        if (tmp->cost > next_room->cost && tmp->is_empty)
-            next_room = tmp;
+        next_room = rooms_linked[i];
+        if ((next_room->is_empty == true && next_room->cost != -1) || next_room->id == lem_in->end) {
+            return (next_room);
+        }
         i++;
     }
-    return (next_room);
+    return (room);
+}
+
+static t_room **get_most_valuable_room(t_lem_in *lem_in, int *links)
+{
+    t_room      **best_rooms;
+    int         links_len;
+    size_t      i;
+
+    i = 0;
+    links_len = get_links_size(links);
+    best_rooms = malloc(sizeof(t_room *) * links_len);
+    while (links[i] != -1)
+    {
+        best_rooms[i] = &lem_in->rooms[links[i]];
+        i++;
+    }
+    sort_by_cost(best_rooms, links_len);
+    return (best_rooms);
+}
+
+static void   sort_by_cost(t_room **rooms, size_t size)
+{
+    t_room      *tmp;
+    size_t      i;
+    size_t      j;
+
+    i = 0;
+    while (i < size)
+    {
+        j = 0;
+        while (j < size - 1)
+        {
+            if (rooms[j]->cost < rooms[j + 1]->cost)
+            {
+                tmp = rooms[j];
+                rooms[j] = rooms[j + 1];
+                rooms[j + 1] = tmp;
+            }
+            j++;
+        }
+        i++;
+    }
 }
 
 static void write_ant_move(int ant_id, char *room_name)

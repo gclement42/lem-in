@@ -32,17 +32,6 @@ static void copy_links(int *links, int *new_links)
 	}
 }
 
-static int get_links_size(int *links)
-{
-	int i;
-
-	i = 0;
-
-	while (links && links[i] != -1)
-		i++;
-	return (i);
-}
-
 static bool add_link(int **links, t_room *linked_room)
 {
     size_t size;
@@ -67,6 +56,17 @@ static bool add_link(int **links, t_room *linked_room)
     *links = tmp;
     (*links)[size] = linked_room->id;
     return (true);
+}
+
+int get_links_size(int *links)
+{
+	int i;
+
+	i = 0;
+
+	while (links && links[i] != -1)
+		i++;
+	return (i);
 }
 
 bool set_link_in_rooms(t_lem_in *lem_in, char *room1, char *room2, t_array *data)

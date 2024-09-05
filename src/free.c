@@ -2,7 +2,7 @@
 
 void free_room(t_room *room)
 {
-	free_array(&room->links);
+	free(room->links);
 	free(room->name);
 }
 

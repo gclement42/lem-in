@@ -15,10 +15,10 @@ void display_data(t_lem_in *lem_in)
     {
         printf("%d: %s, [%f, %f]\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);
         size_t j = 0;
-        printf("links = \n");
+        printf("links:\n");
         while (lem_in->rooms[i].links && lem_in->rooms[i].links[j] != -1)
         {
-            printf("    %s\n", lem_in->rooms[lem_in->rooms[i].links[j]].name);
+            printf("-> %s\n", lem_in->rooms[lem_in->rooms[i].links[j]].name);
             j++;
         }
         printf("------------------------\n");

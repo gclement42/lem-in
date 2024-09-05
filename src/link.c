@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-static bool is_duplicate_link(char **links, size_t size, char *link)
+static bool is_duplicate_link(int *links,  int link)
 {
 	size_t		i;
 
@@ -8,9 +8,9 @@ static bool is_duplicate_link(char **links, size_t size, char *link)
 	if (!links)
 		return (false);
 
-	while (i < size)
+	while (links[i] != -1)
 	{
-		if (ft_streq(links[i], link))
+		if (links[i] == link)
 			return (true);
 		i++;
 	}
@@ -18,72 +18,69 @@ static bool is_duplicate_link(char **links, size_t size, char *link)
 	return (false);
 }
 
-static void free_old_links(char **arr, size_t size)
+static void copy_links(int *links, int *new_links)
 {
 	size_t i;
 
 	i = 0;
-	while (i < size)
+	if (!links)
+		return ;
+	while (links && links[i] != -1)
 	{
-		free(arr[i]);
+		new_links[i] = links[i];
 		i++;
 	}
-	free(arr);
 }
 
-static void copy_links(char **links, char **new_links, size_t size)
+static int get_links_size(int *links)
 {
-	size_t i;
+	int i;
 
 	i = 0;
-	while (i < size)
-	{
-		new_links[i] = ft_strdup(links[i]);
+
+	while (links && links[i] != -1)
 		i++;
-	}
+	return (i);
 }
 
-static void *add_link(t_array *links, char *link)
+static bool add_link(int **links, t_room *linked_room)
 {
-	char *dup_link;
+    size_t size;
 
-	if (is_duplicate_link(links->arr, links->size, link))
-	{
-		print_error("Duplicate link.\n");
-		return (NULL);
-	}
+    if (is_duplicate_link(*links, linked_room->id))
+    {
+        print_error("Duplicate link.\n");
+        return (false);
+    }
 
-	dup_link = ft_strdup(link);
-	if (!dup_link)
-	{
-		print_error(ERR_MALLOC);
-		return (NULL);
-	}
+    size = get_links_size(*links);
+    int *tmp = (int *)ft_realloc(*links, sizeof(int), size + 2);
+    if (!tmp)
+    {
+        print_error(ERR_MALLOC);
+        return (false);
+    }
+    tmp[size + 1] = -1;
 
-	links->size += 1;
-	char **tmp = (char **)ft_realloc(links->arr, sizeof(char *), links->size + 1);
-	if (!tmp)
-	{
-		print_error(ERR_MALLOC);
-		return (NULL);
-	}
-
-	copy_links(links->arr, tmp, links->size - 1);
-	free_old_links(links->arr, links->size - 1);
-	links->arr = tmp;
-	links->arr[links->size - 1] = dup_link;
-	return (links);
+    copy_links(*links, tmp);
+    free(*links);
+    *links = tmp;
+    (*links)[size] = linked_room->id;
+    return (true);
 }
 
 bool set_link_in_rooms(t_lem_in *lem_in, char *room1, char *room2, t_array *data)
 {
     t_room *room;
+    t_room *linked_room;
 
-	room = get_room(lem_in, room1);
-	if (!room)
-		fatal_errors_handler(lem_in, "Room does not exist.\n", data);
+    room = get_room(lem_in, room1);
+    linked_room = get_room(lem_in, room2);
 
-	if (!add_link(&room->links, room2))
-		return (false);
-	return (true);
+    if (!room || !linked_room)
+        fatal_errors_handler(lem_in, "Room does not exist.\n", data);
+
+    if (!add_link(&(room->links), linked_room))
+        return (false);
+    return (true);
 }

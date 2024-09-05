@@ -15,11 +15,13 @@ void display_data(t_lem_in *lem_in)
     {
         printf("%d: %s, [%f, %f]\n", lem_in->rooms[i].id, lem_in->rooms[i].name, lem_in->rooms[i].pos.x, lem_in->rooms[i].pos.y);
         size_t j = 0;
-        while (j < lem_in->rooms[i].links.size)
+        printf("links = \n");
+        while (lem_in->rooms[i].links && lem_in->rooms[i].links[j] != -1)
         {
-            printf("Link: %s\n", lem_in->rooms[i].links.arr[j]);
+            printf("    %s\n", lem_in->rooms[lem_in->rooms[i].links[j]].name);
             j++;
         }
+        printf("------------------------\n");
         i++;
     }
     i = 0;
@@ -36,7 +38,10 @@ void    display_info_rooms_links(t_lem_in *lem_in)
     while (i < lem_in->n_rooms)
     {
         printf("\033[1;35mRoom %s\033[0m is linked to :\n", lem_in->rooms[i].name);
-        ft_print_array(lem_in->rooms[i].links.arr);
+        for (size_t j = 0; lem_in->rooms[i].links[j] != -1; j++)
+        {
+            printf("    \033[1;35mRoom %s\033[0m\n", lem_in->rooms[lem_in->rooms[i].links[j]].name);
+        }
         i++;
     }
     printf("----------------------------------\n");

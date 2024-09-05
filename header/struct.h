@@ -2,6 +2,7 @@
 # define STRUCT_H
 
 # include <stdbool.h>
+# include "../libft/include/libft.h"
 
 typedef struct s_vector2
 {
@@ -28,7 +29,7 @@ typedef struct s_room
     int         id;
     char        *name;
     bool        is_empty;
-    t_array     links;
+    int         *links;
     t_vector3   pos;
     int         cost;
 }               t_room;
@@ -52,7 +53,7 @@ typedef struct s_lem_in
     int         start;
     int         end;
     int         n_rooms;
-    t_node      *path;
+    t_list      *path;
 
 
     t_room      *rooms;
@@ -63,8 +64,9 @@ typedef struct s_lem_in
 void insert_node(t_node **head, t_node *node);
 t_node *create_node(t_room *room);
 void insert_at_start(t_node **head, t_node *node);
-t_node *get_last_node(t_node *path);
-void display_path(t_node *path);
+t_node *get_last_node(t_node *lst);
+size_t get_size_lst(t_node *lst);
+void display_lst(t_node *lst);
 
 
 #endif

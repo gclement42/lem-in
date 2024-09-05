@@ -61,22 +61,55 @@ void insert_at_start(t_node **head, t_node *node)
     *head = node;
 }
 
-t_node *get_last_node(t_node *path)
+t_node *get_last_node(t_node *lst)
 {
     t_node *tmp;
 
-    tmp = path;
+    tmp = lst;
     while (tmp->next)
         tmp = tmp->next;
     return (tmp);
 }
 
-void display_path(t_node *path)
+void remove_last_node(t_node **lst)
+{
+    t_node *tmp;
+    t_node *prev;
+
+    tmp = *lst;
+    prev = NULL;
+    while (tmp->next)
+    {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+    if (prev)
+        prev->next = NULL;
+    free(tmp);
+}
+
+size_t get_size_lst(t_node *lst)
+{
+    t_node *tmp;
+    size_t i = 0;
+
+    tmp = lst;
+    while (tmp)
+    {
+        tmp = tmp->next;
+        i++;
+    }
+    return (i);
+}
+
+
+
+void display_lst(t_node *lst)
 {
     t_node *tmp;
     int i = 0;
 
-    tmp = path;
+    tmp = lst;
     
     while (tmp)
     {
@@ -85,5 +118,5 @@ void display_path(t_node *path)
         i++;
     }
     ft_printf("NULL\n");
-    ft_printf("path length: %d\n", i);
+    ft_printf("lst length: %d\n", i);
 }

@@ -70,6 +70,7 @@ SRCS                    = libft/ft_atoi.c\
                         libft/ft_join_three.c\
                         libft/ft_close_fd.c\
                         libft/ft_exit.c\
+                        libft/ft_pop.c\
                         \
                         ft_printf/ft_printf.c\
                         ft_printf/ft_hexa.c\

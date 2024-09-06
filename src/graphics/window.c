@@ -1,17 +1,22 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere rooms[1000];
+t_sphere rooms[1000];//todo malloc this
 t_sphere ants[1000];
 t_lem_in *g_lem_in;
 int size = 0;
 int ants_size = 0;
+size_t iterations = 0;
 
-t_vector3 *get_links(t_lem_in lem_in, t_array *links) {
-    t_vector3 *res = malloc(sizeof(t_vector3) * links->size);
+t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
+    t_vector3 *res = malloc(sizeof(t_vector3) * size);
     size_t i = 0;
-    while (i < links->size) {
-        t_room *room = get_room(&lem_in, links->arr[i]);
+    while (i < size) {
+        t_room *room = &lem_in.rooms[links[i]];
+        if (!room) {
+            printf("Room id %d not found\n", links[i]);
+            exit(1);
+        }
         res[i] = (t_vector3){room->pos.x, room->pos.y, room->pos.z};
         i++;
     }
@@ -31,8 +36,8 @@ void init_rooms(t_lem_in lem_in) {
             rooms[i].color = (t_color){0.0, 1.0, 0.0, 1.0};
         else
             rooms[i].color = (t_color){1.0, 1.0, 1.0, 1.0};
-        rooms[i].links = get_links(lem_in, &lem_in.rooms[i].links);
-        rooms[i].links_size = lem_in.rooms[i].links.size;
+        rooms[i].links_size = get_links_size(lem_in.rooms[i].links);
+        rooms[i].links = get_links(lem_in, lem_in.rooms[i].links, rooms[i].links_size);
     }
     size = lem_in.n_rooms;
 }
@@ -80,10 +85,11 @@ void update(int value)
     }
     if (count == ants_size) {
         if (check_if_all_ants_in_end(g_lem_in)) {
-            printf("All ants are in end\n");
+            // printf("All ants are in end with %ld iterations\n", iterations);
             return;
         }
         move_ants_manager(g_lem_in);
+        iterations++;
     }
     glutTimerFunc(value, update, value);
 }
@@ -167,7 +173,7 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer =  1;
+    size_t timer =  0;
     g_lem_in = &lem_in;
     init_rooms(lem_in);
     init_ants_sphere(lem_in);

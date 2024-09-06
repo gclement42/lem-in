@@ -1,5 +1,10 @@
 #include "lem_in.h"
 
+static bool     check_extension(char *filename);
+static bool     check_arguments(int argc, char *filename);
+
+
+
 static bool check_extension(char *filename)
 {
     int i;
@@ -30,6 +35,7 @@ static bool check_arguments(int argc, char *filename)
     return (true);
 }
 
+
 int main(int argc, char **argv)
 {
     t_array *data;
@@ -44,10 +50,9 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     lem_in = parse_data(data);
     // display_data(&lem_in);
+    algo_manager(&lem_in);
     init_ants(&lem_in);
     init_window(argc, argv, lem_in);
-
-    move_ants_manager(&lem_in);
     
     free_lem_in(&lem_in);
     return (EXIT_SUCCESS);

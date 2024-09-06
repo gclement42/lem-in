@@ -1,11 +1,6 @@
 #include "lem_in.h"
 
-static bool check_if_ants(char *line)
-{
-    if (check_if_link(line) || check_if_room(line) || check_if_command(line) || check_if_comment(line))
-        return (false);
-    return (true);
-}
+static bool     check_if_ants(char *line);
 
 void parse_nb_ants(t_lem_in *lem_in, t_array *data)
 {
@@ -25,4 +20,11 @@ void parse_nb_ants(t_lem_in *lem_in, t_array *data)
         fatal_errors_handler(lem_in, "Invalid number of ants.\n", data);
     lem_in->n_ants = nb_ants;
     data->index = i + 1;
+}
+
+static bool check_if_ants(char *line)
+{
+    if (check_if_link(line) || check_if_room(line) || check_if_command(line) || check_if_comment(line))
+        return (false);
+    return (true);
 }

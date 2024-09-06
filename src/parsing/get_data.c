@@ -1,5 +1,32 @@
 #include "lem_in.h"
 
+static int      count_line(char *filename); 
+static char     **malloc_arr(char *filename);
+static t_array  *init_data(char *filename);
+static void     read_data(t_array *data, int fd);
+
+
+t_array *get_data(char *filename)
+{
+    int fd;
+    t_array *data;
+
+    data = init_data(filename);
+    if (!data)
+        return (NULL);
+    fd = open_map(filename);
+    if (fd < 0)
+    {
+        print_error("Error: Could not open file.\n");
+        free_array(data);
+        free(data);
+        return (NULL);
+    }
+    read_data(data, fd);
+    close(fd);
+    return (data);
+}
+
 static int count_line(char *filename) 
 {
     int count;
@@ -96,25 +123,4 @@ static void read_data(t_array *data, int fd)
         data->size++;
     }
     free(line);
-}
-
-t_array *get_data(char *filename)
-{
-    int fd;
-    t_array *data;
-
-    data = init_data(filename);
-    if (!data)
-        return (NULL);
-    fd = open_map(filename);
-    if (fd < 0)
-    {
-        print_error("Error: Could not open file.\n");
-        free_array(data);
-        free(data);
-        return (NULL);
-    }
-    read_data(data, fd);
-    close(fd);
-    return (data);
 }

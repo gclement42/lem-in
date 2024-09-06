@@ -1,36 +1,7 @@
 #include "lem_in.h"
 
-static bool check_is_valid_link(char **link_rooms)
-{
-    int i;
-
-    i = 0;
-    while (link_rooms && link_rooms[i])
-        i++;
-    if (i != 2)
-        return (false);
-    return (true);
-}
-
-static bool check_error_link(t_lem_in *lem_in, char **link_rooms)
-{
-    if (!link_rooms)
-    {
-        print_error(ERR_SPLIT);
-        return (false);
-    }
-    if (!check_is_valid_link(link_rooms))
-    {
-        print_error("Wrong link format.\n");
-        return (false);
-    }
-    if (!check_if_room_exist(lem_in, link_rooms[0]) || !check_if_room_exist(lem_in, link_rooms[1]))
-    {
-        print_error("One of the rooms in a link does not exist.\n");
-        return (false);
-    }
-    return (true);
-}
+static bool     check_is_valid_link(char **link_rooms);
+static bool     check_error_link(t_lem_in *lem_in, char **link_rooms);
 
 bool check_if_link(char *line)
 {
@@ -63,4 +34,36 @@ void parse_links(t_lem_in *lem_in, t_array *data)
         free(link_rooms);
         *i += 1;
     }
+}
+
+static bool check_is_valid_link(char **link_rooms)
+{
+    int i;
+
+    i = 0;
+    while (link_rooms && link_rooms[i])
+        i++;
+    if (i != 2)
+        return (false);
+    return (true);
+}
+
+static bool check_error_link(t_lem_in *lem_in, char **link_rooms)
+{
+    if (!link_rooms)
+    {
+        print_error(ERR_SPLIT);
+        return (false);
+    }
+    if (!check_is_valid_link(link_rooms))
+    {
+        print_error("Wrong link format.\n");
+        return (false);
+    }
+    if (!check_if_room_exist(lem_in, link_rooms[0]) || !check_if_room_exist(lem_in, link_rooms[1]))
+    {
+        print_error("One of the rooms in a link does not exist.\n");
+        return (false);
+    }
+    return (true);
 }

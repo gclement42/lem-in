@@ -1,13 +1,19 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere    rooms[1000];//todo malloc this
-t_sphere    ants[1000];
-t_lem_in    *g_lem_in;
-int         size = 0;
-int         ants_size = 0;
-size_t      iterations = 0;
+t_sphere *rooms;
+t_sphere *ants;
+t_lem_in *g_lem_in;
+int size = 0;
+int ants_size = 0;
+size_t iterations = 0;
+bool esc_is_pressed = false;
 bool        paused = false;
+
+static void     keyboard_listener(unsigned char key, int x, int y);
+static void     malloc_rooms_and_ants(int n_ants, int n_rooms);
+static void     free_global_vars();
+
 
 t_sphere *get_ants() 
 {
@@ -159,7 +165,7 @@ void draw_sphere(t_vector3 pos, float radius, t_color color) {
     glPushMatrix();
     glColor4d(color.r, color.g, color.b, color.o);
     glTranslatef(pos.x, pos.y, pos.z);
-    gluSphere(gluNewQuadric(), radius, 20, 20);
+    gluSphere(quad, radius, 20, 20);
     glPopMatrix();
     gluDeleteQuadric(quad);
 }
@@ -217,9 +223,12 @@ void idle(void) {
 void init_window(int argc, char **argv, t_lem_in lem_in) {
     size_t timer =  1;
     g_lem_in = &lem_in;
+
+    malloc_rooms_and_ants(lem_in.n_ants, lem_in.n_rooms);
     init_rooms(lem_in);
     init_ants_sphere(lem_in);
     setup_camera(rooms, size);
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowSize(WIDTH, HEIGHT);
@@ -232,7 +241,48 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     glutDisplayFunc(draw);
     glutReshapeFunc(reshape);
     glutIdleFunc(idle);
+
     move_ants_manager(g_lem_in);
+
     glutTimerFunc(timer, update, timer);
     glutMainLoop();
+
+}
+
+static void keyboard_listener(unsigned char key, int x, int y) {
+    (void)x;
+    (void)y;
+
+    printf("key: %d\n", key);
+    if (key == 27) {
+        esc_is_pressed = true;
+        free_global_vars();
+        exit(EXIT_SUCCESS);
+    }
+    if (key == 32)
+        lock_camera_on_ant();
+    if (key == 112)
+        set_paused();
+}
+
+static void malloc_rooms_and_ants(int n_ants, int n_rooms)
+{
+    ants = malloc(sizeof(t_sphere) * n_ants);
+    rooms = malloc(sizeof(t_sphere) * n_rooms);
+}
+
+static void free_global_vars()
+{
+    int i;
+
+    i = 0;
+
+    while (i < g_lem_in->n_rooms)
+    {
+        free(rooms[i].links);
+        i++;
+    }
+    free(rooms);
+    free(ants);
+    free_lem_in(g_lem_in);
 }

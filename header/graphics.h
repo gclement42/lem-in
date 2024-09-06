@@ -36,7 +36,6 @@ typedef struct s_sphere {
 
 void 		init_window(int argc, char **argv, t_lem_in lem_in);
 void 		special_keyboard_listener(int key, int x, int y);
-void 		keyboard_listener(unsigned char key, int x, int y);
 t_sphere	*get_ants();
 t_sphere 	*get_rooms();
 int 		get_n_ants();

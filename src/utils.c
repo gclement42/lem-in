@@ -16,13 +16,6 @@ void *ft_realloc(void *ptr, size_t size, size_t len)
     return (new_ptr);
 }
 
-bool next_room_is_end(t_lem_in *lem_in, t_ant *ant)
-{
-    if (ant->path->room->id == lem_in->end)
-        return (true);
-    return (false);
-}
-
 t_node *create_node(t_room *room)
 {
     t_node *node;

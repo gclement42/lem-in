@@ -24,7 +24,6 @@ static t_vector3 get_room_pos(char *line)
 
     pos.x = ft_atoi_lem_in(split[1]);
     pos.y = ft_atoi_lem_in(split[2]);
-    printf("pos.x = %f, pos.y = %f\n", pos.x, pos.y);
     pos.z = generate_random_number(0, 0);
 
     ft_free_array(split);

@@ -3,6 +3,7 @@
 
 # include "lem_in.h"
 # include <fcntl.h>
+# include <limits.h>
 
 t_array             *get_data(char *filename);
 int	                open_map(char *map_path);
@@ -26,6 +27,7 @@ void                set_room(t_room *room, int id, char *name, t_vector3 pos);
 void 				set_command(t_lem_in *lem_in, char *line, int room_id);
 void                set_room(t_room *room, int id, char *name, t_vector3 pos);
 void                full_gnl_loop(int fd);
+int	                ft_atoi_lem_in(const char *str);
 
 
 #endif

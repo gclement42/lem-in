@@ -42,9 +42,22 @@ void special_keyboard_listener(int key, int x, int y) {
     (void)x;
     (void)y;
 
-    t_camera camera = get_camera();
-	t_vector3 forward = calc_forward(camera);
-	t_vector3 right = calc_right(camera, forward);
+    t_camera *camera = get_camera();
+    if (camera->locked_on_ant) {
+        if (key == GLUT_KEY_LEFT) {
+            camera->ant_followed--;
+            if (camera->ant_followed < 0)
+                camera->ant_followed = get_n_ants() - 1;
+        } else if (key == GLUT_KEY_RIGHT) {
+            camera->ant_followed++;
+            if (camera->ant_followed >= get_n_ants())
+                camera->ant_followed = 0;
+        }
+        return;
+    }
+        
+	t_vector3 forward = calc_forward(*camera);
+	t_vector3 right = calc_right(*camera, forward);
 
     t_vector3 move = {0, 0, 0};
 

@@ -8,8 +8,14 @@ int size = 0;
 int ants_size = 0;
 size_t iterations = 0;
 
-t_sphere *get_ants() {
+t_sphere *get_ants() 
+{
     return ants;
+}
+
+int get_n_ants() 
+{
+    return ants_size;
 }
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
@@ -133,7 +139,7 @@ static void draw(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    t_camera camera = get_camera();
+    t_camera camera = *get_camera();
     if (camera.locked_on_ant)
         follow_ant();
     gluLookAt(

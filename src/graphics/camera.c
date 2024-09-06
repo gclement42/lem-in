@@ -9,9 +9,9 @@ float *get_rotation_angle()
 	return &rotation_angle;
 }
 
-t_camera get_camera() 
+t_camera *get_camera() 
 {
-	return camera;
+	return &camera;
 }
 
 void move_camera(t_vector3 direction) 
@@ -91,7 +91,7 @@ void lock_camera_on_ant()
 void follow_ant() 
 {
     t_sphere *ants = get_ants();
-    t_vector3 pos = ants[0].pos;
+    t_vector3 pos = ants[camera.ant_followed].pos;
     camera.center.x = pos.x;
     camera.center.y = pos.y;
     camera.center.z = pos.z;

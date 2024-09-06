@@ -32,6 +32,7 @@ typedef struct s_room
     int         *links;
     t_vector3   pos;
     int         cost;
+    bool        visited;
 }               t_room;
 
 typedef struct s_node

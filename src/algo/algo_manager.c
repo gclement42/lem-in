@@ -3,7 +3,7 @@
 static void calculate_all_rooms_cost(t_lem_in *lem_in);
 static int reach_path(t_lem_in lem_in, t_room *room);
 
-void    algo_manager(t_lem_in *lem_in)
+void algo_manager(t_lem_in *lem_in)
 {
     calculate_all_rooms_cost(lem_in);
 }
@@ -19,19 +19,25 @@ static void calculate_all_rooms_cost(t_lem_in *lem_in)
 static int reach_path(t_lem_in lem_in, t_room *room)
 {
     t_room *next_room;
-    int     cost;
-    size_t  i;
+    int cost;
+    size_t i;
 
     i = 0;
     cost = 0;
+    printf("Room %s\n", room->name);
+    printf("Room cost %d\n", room->cost);
+    room->visited = true;
+
     if (lem_in.end == room->id)
         return lem_in.n_rooms;
     if (!room->links)
         return -1;
-    while (room->links[i] != -1)
+
+    while (room->links[i] != -1 && room->links[i] != 1)
     {
         next_room = &lem_in.rooms[room->links[i]];
-        if (next_room->cost >= 0) {
+
+        if (!next_room->visited && next_room->cost >= 0) {
             cost = reach_path(lem_in, next_room);
             if (cost >= next_room->cost || cost == -1)
                 next_room->cost = cost;
@@ -42,5 +48,8 @@ static int reach_path(t_lem_in lem_in, t_room *room)
         }
         i++;
     }
+
+    room->visited = false;
+
     return -1;
 }

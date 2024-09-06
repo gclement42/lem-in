@@ -29,6 +29,11 @@ void parse_links(t_lem_in *lem_in, t_array *data)
             ft_free_array(link_rooms);
             fatal_errors_handler(lem_in, NULL, data);
         }
+        if (!set_link_in_rooms(lem_in, link_rooms[1], link_rooms[0], data))
+        {
+            ft_free_array(link_rooms);
+            fatal_errors_handler(lem_in, NULL, data);
+        }
         free(link_rooms[0]);
         free(link_rooms[1]);
         free(link_rooms);

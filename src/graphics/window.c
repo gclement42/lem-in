@@ -1,12 +1,13 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere rooms[1000];//todo malloc this
-t_sphere ants[1000];
-t_lem_in *g_lem_in;
-int size = 0;
-int ants_size = 0;
-size_t iterations = 0;
+t_sphere    rooms[1000];//todo malloc this
+t_sphere    ants[1000];
+t_lem_in    *g_lem_in;
+int         size = 0;
+int         ants_size = 0;
+size_t      iterations = 0;
+bool        paused = false;
 
 t_sphere *get_ants() 
 {
@@ -16,6 +17,11 @@ t_sphere *get_ants()
 int get_n_ants() 
 {
     return ants_size;
+}
+
+void set_paused() 
+{
+    paused = !paused;
 }
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
@@ -76,12 +82,17 @@ void update(int value)
 {
     float   speed;
     int     count = 0;
+
+    if (paused) {
+        glutTimerFunc(value, update, value);
+        return;
+    }
     for (int i = 0; i < ants_size; i++)
     {
         t_room room = *g_lem_in->ants[i].room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-        speed = length / 15;
+        speed = length / 25;
         if (length > 0.1f)
         {
             ants[i].pos.x += dir.x / length * speed;
@@ -192,7 +203,7 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     setup_camera(rooms, size);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(1920, 1080);
+    glutInitWindowSize(WIDTH, HEIGHT);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Lem-in");
     glutKeyboardFunc(keyboard_listener);

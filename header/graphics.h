@@ -8,6 +8,8 @@
 #include "lem_in.h"
 
 #define pi 3.14159265359
+#define WIDTH 1920
+#define HEIGHT 1080
 
 typedef struct s_camera {
 	t_vector3 	center;
@@ -48,5 +50,7 @@ void 		follow_ant();
 
 void 		mouse_listener(int button, int state, int x, int y);
 void 		mouse_motion_listener(int x, int y);
+
+void 		set_paused();
 
 #endif

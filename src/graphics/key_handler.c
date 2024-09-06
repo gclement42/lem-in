@@ -3,14 +3,6 @@
 int mouse_state = 0;
 t_vector2 last_mouse_pos;
 
-void keyboard_listener(unsigned char key, int x, int y) {
-    (void)x;
-    (void)y;
-    if (key == 27) {
-        exit(0);
-    }
-}
-
 t_vector3 calc_forward(t_camera camera) {
 	t_vector3 forward;	
 	forward.x = camera.center.x - camera.eye.x;

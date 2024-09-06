@@ -31,7 +31,6 @@ typedef struct s_sphere {
 
 void init_window(int argc, char **argv, t_lem_in lem_in);
 void special_keyboard_listener(int key, int x, int y);
-void keyboard_listener(unsigned char key, int x, int y);
 
 void setup_camera(t_sphere *points, int size);
 float *get_rotation_angle();

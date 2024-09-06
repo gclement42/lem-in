@@ -1,12 +1,15 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere rooms[1000];//todo malloc this
-t_sphere ants[1000];
+t_sphere *rooms;//todo malloc this
+t_sphere *ants;
 t_lem_in *g_lem_in;
 int size = 0;
 int ants_size = 0;
 size_t iterations = 0;
+
+static void keyboard_listener(unsigned char key, int x, int y);
+static void malloc_rooms_and_ants(int n_ants, int n_rooms);
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
@@ -173,8 +176,10 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
+    // bool is_running = true;
     size_t timer =  0;
     g_lem_in = &lem_in;
+    malloc_rooms_and_ants(lem_in.n_ants, lem_in.n_rooms);
     init_rooms(lem_in);
     init_ants_sphere(lem_in);
     setup_camera(rooms, size);
@@ -193,4 +198,20 @@ void init_window(int argc, char **argv, t_lem_in lem_in) {
     move_ants_manager(g_lem_in);
     glutTimerFunc(timer, update, timer);
     glutMainLoop();
+    // while (is_running)
+}
+
+static void keyboard_listener(unsigned char key, int x, int y) {
+    (void)x;
+    (void)y;
+    printf("key: %d\n", key);
+    if (key == 27) {
+        exit(0);
+    }
+}
+
+static void malloc_rooms_and_ants(int n_ants, int n_rooms)
+{
+    ants = malloc(sizeof(t_sphere) * n_ants);
+    rooms = malloc(sizeof(t_sphere) * n_rooms);
 }

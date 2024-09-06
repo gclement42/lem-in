@@ -104,7 +104,10 @@ void parse_rooms(t_lem_in *lem_in, t_array *data)
             fatal_errors_handler(lem_in, "Wrong room format.\n", data);
         char *room_name = get_room_name(data->arr[*i]);
         if (check_if_room_exist(lem_in, room_name))
+        {
+            printf("Room name: %s\n", room_name);
             fatal_errors_handler(lem_in, "Room already exist.\n", data);
+        }
         set_room(&lem_in->rooms[id], id, room_name, room_pos);
         if (check_if_command(data->arr[*i - 1]))
             set_command(lem_in, data->arr[*i - 1], id);

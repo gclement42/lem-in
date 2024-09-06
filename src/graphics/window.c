@@ -45,7 +45,7 @@ t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
     size_t i = 0;
     while (i < size) {
-        t_room *room = NULL;//&lem_in.rooms[links[i]];
+        t_room *room = &lem_in.rooms[links[i]];
         if (!room) {
             printf("Room id %d not found\n", links[i]);
             free(res);
@@ -224,7 +224,7 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer =  1;
+    size_t timer = 1;
     g_lem_in = &lem_in;
 
     malloc_rooms_and_ants(lem_in.n_ants, lem_in.n_rooms);
@@ -256,7 +256,6 @@ static void keyboard_listener(unsigned char key, int x, int y) {
     (void)x;
     (void)y;
 
-    printf("key: %d\n", key);
     if (key == 27) {
         esc_is_pressed = true;
         free_global_vars();

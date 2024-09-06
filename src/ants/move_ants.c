@@ -3,9 +3,9 @@
 static void     move_ants(t_lem_in *lem_in);
 static void     write_ant_move(int ant_id, char *room_name);
 static t_room   *get_next_room(t_lem_in *lem_in, t_room *room);
-static t_room **get_most_valuable_room(t_lem_in *lem_in, int *links);
-static void   sort_by_cost(t_room **rooms, size_t size);
-
+static t_room   **get_most_valuable_room(t_lem_in *lem_in, int *links);
+static void     sort_by_cost(t_room **rooms, size_t size);
+// static void     display_all_links(t_room *room, t_room **rooms_linked);
 
 void    move_ants_manager(t_lem_in *lem_in)
 {
@@ -22,9 +22,13 @@ static void    move_ants(t_lem_in *lem_in)
     {
         if (ants[i].room->id == lem_in->end)
             continue;
+        // printf("Ant %d is in room %s\n", ants[i].id, ants[i].room->name);
         next_room = get_next_room(lem_in, ants[i].room);
         if (next_room->is_empty == false && next_room->id != lem_in->end)
+        {
+            // printf("Ant %d is blocked in room %s\n", ants[i].id, ants[i].room->name);
             continue;
+        }
         if (next_room->id == ants[i].room->id)
             continue;
         ants[i].room->is_empty = true;
@@ -34,6 +38,22 @@ static void    move_ants(t_lem_in *lem_in)
     }
     ft_printf("\n");
 }
+
+// static void display_all_links(t_room *room, t_room **rooms_linked)
+// {
+//     size_t      i;
+//     size_t      links_len;
+
+//     i = 0;
+//     links_len = get_links_size(room->links);
+//     ft_printf("Room %s is linked to: \n", room->name);
+//     while (i < links_len)
+//     {
+//         ft_printf(" %s: %d\n", rooms_linked[i]->name, rooms_linked[i]->cost);
+//         i++;
+//     }
+//     ft_printf("\n-----------------\n");
+// }
 
 static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
 {
@@ -48,6 +68,7 @@ static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
     }
     links_len = get_links_size(room->links);
     rooms_linked = get_most_valuable_room(lem_in, room->links);
+    // display_all_links(room, rooms_linked);
     while (i < links_len && i < 3)
     {
         next_room = rooms_linked[i];

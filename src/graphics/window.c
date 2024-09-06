@@ -9,8 +9,10 @@ int ants_size = 0;
 size_t iterations = 0;
 bool esc_is_pressed = false;
 
-static void keyboard_listener(unsigned char key, int x, int y);
-static void malloc_rooms_and_ants(int n_ants, int n_rooms);
+static void     keyboard_listener(unsigned char key, int x, int y);
+static void     malloc_rooms_and_ants(int n_ants, int n_rooms);
+static void     free_global_vars();
+
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
@@ -123,7 +125,7 @@ void draw_sphere(t_vector3 pos, float radius, t_color color) {
     glPushMatrix();
     glColor4d(color.r, color.g, color.b, color.o);
     glTranslatef(pos.x, pos.y, pos.z);
-    gluSphere(gluNewQuadric(), radius, 20, 20);
+    gluSphere(quad, radius, 20, 20);
     glPopMatrix();
     gluDeleteQuadric(quad);
 }
@@ -212,9 +214,7 @@ static void keyboard_listener(unsigned char key, int x, int y) {
     printf("key: %d\n", key);
     if (key == 27) {
         esc_is_pressed = true;
-        free(rooms);
-        free(ants);
-        free_lem_in(g_lem_in);
+        free_global_vars();
         exit(EXIT_SUCCESS);
     }
 }
@@ -223,4 +223,20 @@ static void malloc_rooms_and_ants(int n_ants, int n_rooms)
 {
     ants = malloc(sizeof(t_sphere) * n_ants);
     rooms = malloc(sizeof(t_sphere) * n_rooms);
+}
+
+static void free_global_vars()
+{
+    int i;
+
+    i = 0;
+
+    while (i < g_lem_in->n_rooms)
+    {
+        free(rooms[i].links);
+        i++;
+    }
+    free(rooms);
+    free(ants);
+    free_lem_in(g_lem_in);
 }

@@ -51,11 +51,14 @@ static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
     while (i < links_len && i < 3)
     {
         next_room = rooms_linked[i];
-        if ((next_room->is_empty == true && next_room->cost != -1) || next_room->id == lem_in->end) {
+        if ((next_room->is_empty == true && next_room->cost != -1) || next_room->id == lem_in->end)
+        {
+            free(rooms_linked);
             return (next_room);
         }
         i++;
     }
+    free(rooms_linked);
     return (room);
 }
 

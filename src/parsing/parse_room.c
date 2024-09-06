@@ -38,6 +38,11 @@ static char *get_room_name(char *line)
     while (line[i] != ' ')
         i++;
     name = ft_substr(line, 0, i);
+    if (!name)
+    {
+        print_error(ERR_MALLOC);
+        return (NULL);
+    }
 
     return (name);
 }

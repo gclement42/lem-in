@@ -22,6 +22,7 @@ SRC			 			= main.c \
 							graphics/window.c\
 							graphics/key_handler.c\
 							graphics/camera.c\
+							graphics/hud.c\
 							display_data.c\
 							\
 							parsing/get_data.c\

@@ -14,6 +14,16 @@ t_sphere *get_ants()
     return ants;
 }
 
+t_sphere *get_rooms() 
+{
+    return rooms;
+}
+
+int get_n_rooms() 
+{
+    return size;
+}
+
 int get_n_ants() 
 {
     return ants_size;
@@ -76,6 +86,33 @@ bool check_if_all_ants_in_end(t_lem_in *lem_in) {
             return false;
     }
     return true;
+}
+
+void render_text(float x, float y, const char *text) 
+{
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // Déplacement à la position de texte
+    glRasterPos2f(x, y);
+
+    // Rendre chaque caractère
+    for (const char *c = text; *c != '\0'; c++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+    }
+    
+    // Rétablissement des matrices d'origine
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }
 
 void update(int value) 
@@ -170,13 +207,17 @@ static void draw(void) {
         }
     }
 
-    // printf("Ants size: %d\n", ants_size);
     for (int i = 0; i < ants_size; i++) {
-        // printf("Ant %d is in room %s\n", g_lem_in->ants[i].id, g_lem_in->ants[i].room->name);
         draw_sphere(ants[i].pos, 0.40, ants[i].color);
     }
+    
+    char buffer[50];
+    sprintf(buffer, "Nombre d'iterations: %zu", iterations);
+    render_text(10, HEIGHT - 20, buffer);
+
     glutSwapBuffers();
 }
+
 
 void reshape(int largeur, int hauteur) {
     if (hauteur <= 0) hauteur = 1;

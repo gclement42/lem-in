@@ -8,6 +8,10 @@ int size = 0;
 int ants_size = 0;
 size_t iterations = 0;
 
+t_sphere *get_ants() {
+    return ants;
+}
+
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
     size_t i = 0;
@@ -130,6 +134,8 @@ static void draw(void) {
     glLoadIdentity();
 
     t_camera camera = get_camera();
+    if (camera.locked_on_ant)
+        follow_ant();
     gluLookAt(
         camera.eye.x, camera.eye.y, camera.eye.z,
         camera.center.x, camera.center.y, camera.center.z,
@@ -173,7 +179,7 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer =  0;
+    size_t timer =  1;
     g_lem_in = &lem_in;
     init_rooms(lem_in);
     init_ants_sphere(lem_in);

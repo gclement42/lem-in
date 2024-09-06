@@ -6,9 +6,10 @@ t_vector2 last_mouse_pos;
 void keyboard_listener(unsigned char key, int x, int y) {
     (void)x;
     (void)y;
-    if (key == 27) {
-        exit(0);
-    }
+    if (key == 27)
+        exit(0); //#TO-DO: free all mallocs
+    if (key == 32)
+        lock_camera_on_ant();
 }
 
 t_vector3 calc_forward(t_camera camera) {

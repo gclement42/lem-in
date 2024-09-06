@@ -1,10 +1,5 @@
 #include "lem_in.h"
 
-static int generate_random_number(int min, int max) {
-    return (rand() % (max - min + 1)) + min;
-}
-
-
 static t_vector3 get_room_pos(char *line)
 {
     t_vector3       pos;
@@ -22,9 +17,9 @@ static t_vector3 get_room_pos(char *line)
         return ((t_vector3){-1, -1, -1});
     }
 
-    pos.x = ft_atoi(split[1]);
-    pos.y = ft_atoi(split[2]);
-    pos.z = generate_random_number(0, 0);
+    pos.x = ft_atoi(split[1]) + generate_random_number(0, ft_atoi(split[1]));
+    pos.y = ft_atoi(split[2]) + generate_random_number(0, ft_atoi(split[2]));
+    pos.z = generate_random_number(0, pos.x + pos.y);
 
     ft_free_array(split);
     return (pos);

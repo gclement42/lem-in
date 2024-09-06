@@ -9,9 +9,9 @@ float *get_rotation_angle()
 	return &rotation_angle;
 }
 
-t_camera get_camera() 
+t_camera *get_camera() 
 {
-	return camera;
+	return &camera;
 }
 
 void move_camera(t_vector3 direction) 
@@ -64,10 +64,10 @@ void setup_camera(t_sphere *points, int size)
     centroid.y /= size;
     centroid.z /= size;
 
-    float radius = 20.0f;
-    eye.x = centroid.x + radius * cos(rotation_angle);
-    eye.y = centroid.y + radius * sin(vertical_angle);
-    eye.z = centroid.z + radius * sin(rotation_angle);
+    camera.radius = 20.0f;
+    eye.x = centroid.x + camera.radius * cos(rotation_angle);
+    eye.y = centroid.y + camera.radius * sin(vertical_angle);
+    eye.z = centroid.z + camera.radius * sin(rotation_angle);
 
     up.x = 0;
     up.y = 1;
@@ -76,4 +76,26 @@ void setup_camera(t_sphere *points, int size)
     camera.eye = eye;
     camera.center = centroid;
     camera.up = up;
+
+    camera.locked_on_ant = false;
+}
+
+void lock_camera_on_ant() 
+{
+    if (camera.locked_on_ant)
+        camera.locked_on_ant = false;
+    else
+        camera.locked_on_ant = true;  
+}
+
+void follow_ant() 
+{
+    t_sphere *ants = get_ants();
+    t_vector3 pos = ants[camera.ant_followed].pos;
+    camera.center.x = pos.x;
+    camera.center.y = pos.y;
+    camera.center.z = pos.z;
+    camera.eye.x = pos.x + camera.radius * cos(rotation_angle);
+    camera.eye.y = pos.y + camera.radius * sin(vertical_angle);
+    camera.eye.z = pos.z + camera.radius * sin(rotation_angle);
 }

@@ -29,17 +29,31 @@ t_vector3 calc_right(t_camera camera, t_vector3 forward) {
 	return right;
 }
 
+void change_followed_ant(int key, t_camera *camera) {
+    if (key == GLUT_KEY_LEFT) {
+        camera->ant_followed--;
+        if (camera->ant_followed < 0)
+            camera->ant_followed = get_n_ants() - 1;
+    } else if (key == GLUT_KEY_RIGHT) {
+        camera->ant_followed++;
+        if (camera->ant_followed >= get_n_ants())
+            camera->ant_followed = 0;
+    }
+}
+
 void special_keyboard_listener(int key, int x, int y) {
+    t_camera *camera = get_camera();
+	t_vector3 forward = calc_forward(*camera);
+	t_vector3 right = calc_right(*camera, forward);
+
+    t_vector3 move = {0, 0, 0};
     (void)x;
     (void)y;
 
-    t_camera camera = get_camera();
-	t_vector3 forward = calc_forward(camera);
-	t_vector3 right = calc_right(camera, forward);
-
-    t_vector3 move = {0, 0, 0};
-
-    if (key == GLUT_KEY_UP) {
+    if (camera->locked_on_ant) {
+        change_followed_ant(key, camera);
+    }
+    else if (key == GLUT_KEY_UP) {
         move.x = forward.x * 0.5f;
         move.y = forward.y * 0.5f;
         move.z = forward.z * 0.5f;
@@ -72,8 +86,6 @@ void mouse_motion_listener(int x, int y) {
 }
 
 void mouse_listener(int button, int state, int x, int y) {
-	(void)x;
-	(void)y;
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		last_mouse_pos = (t_vector2){x, y};
 		mouse_state = 1;

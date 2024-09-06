@@ -1,15 +1,55 @@
 #include "lem_in.h"
 
-bool check_if_click_on_room(t_vector2 mouse_pos)
+void render_text(float x, float y, const char *text) 
 {
-	t_sphere *room;
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // Déplacement à la position de texte
+    glRasterPos2f(x, y);
 
-	room = get_rooms();
-	for (int i = 0; i < get_n_rooms(); i++)
-	{
-		if (mouse_pos.x >= room[i].pos.x - 10 && mouse_pos.x <= room[i].pos.x + 10
-			&& mouse_pos.y >= room[i].pos.y - 10 && mouse_pos.y <= room[i].pos.y + 10)
-			return (true);
-	}
-	return (false);
+    // Rendre chaque caractère
+    for (const char *c = text; *c != '\0'; c++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+    }
+    
+    // Rétablissement des matrices d'origine
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }
+
+void display_room_info(t_room room) 
+{
+	char buffer[50];
+	sprintf(buffer, "Salle %s Cost: %d", room.name, room.cost);
+	render_text(WIDTH - (WIDTH / 8), HEIGHT - (HEIGHT / 10), buffer);
+}
+
+void display_ant_info(t_ant ant) 
+{
+	char buffer[50];
+	sprintf(buffer, "Fourmi %d dans la salle %s", ant.id, ant.room->name);
+	render_text(WIDTH - (WIDTH / 8), HEIGHT - (HEIGHT / 20), buffer);
+	display_room_info(*ant.room);
+}
+
+void draw_hud(t_lem_in lem_in, int iterations) 
+{
+	t_camera *camera = get_camera();
+	char buffer[50];
+	sprintf(buffer, "Nombre d'iterations: %d", iterations);
+	render_text(10,  HEIGHT - (HEIGHT / 20), buffer);
+	if (camera->locked_on_ant) {
+		display_ant_info(lem_in.ants[camera->ant_followed]);
+	}
+}
+

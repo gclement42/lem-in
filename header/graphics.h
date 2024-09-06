@@ -50,6 +50,7 @@ void 		rotate_camera(int x, int y);
 void 		lock_camera_on_ant();
 void 		follow_ant();
 void 		render_text(float x, float y, const char *text);
+void 		draw_hud(t_lem_in lem_in, int iterations); 
 
 void 		mouse_listener(int button, int state, int x, int y);
 void 		mouse_motion_listener(int x, int y);

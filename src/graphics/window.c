@@ -49,6 +49,15 @@ t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     return res;
 }
 
+t_color interpolate_color(t_color color1, t_color color2, float factor) {
+    t_color result;
+    result.r = color1.r + factor * (color2.r - color1.r);
+    result.g = color1.g + factor * (color2.g - color1.g);
+    result.b = color1.b + factor * (color2.b - color1.b);
+    result.o = color1.o + factor * (color2.o - color1.o);
+    return result;
+}
+
 void init_rooms(t_lem_in lem_in) {
     int i;
 
@@ -61,7 +70,7 @@ void init_rooms(t_lem_in lem_in) {
         else if (i == lem_in.start)
             rooms[i].color = (t_color){0.0, 1.0, 0.0, 1.0};
         else
-            rooms[i].color = (t_color){1.0, 1.0, 1.0, 1.0};
+            rooms[i].color = interpolate_color((t_color){1.0, 1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0, 1.0}, lem_in.rooms[i].cost / (float)lem_in.n_rooms);
         rooms[i].links_size = get_links_size(lem_in.rooms[i].links);
         rooms[i].links = get_links(lem_in, lem_in.rooms[i].links, rooms[i].links_size);
     }
@@ -86,33 +95,6 @@ bool check_if_all_ants_in_end(t_lem_in *lem_in) {
             return false;
     }
     return true;
-}
-
-void render_text(float x, float y, const char *text) 
-{
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    
-    glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
-    
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-    
-    // Déplacement à la position de texte
-    glRasterPos2f(x, y);
-
-    // Rendre chaque caractère
-    for (const char *c = text; *c != '\0'; c++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
-    }
-    
-    // Rétablissement des matrices d'origine
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-    glPopMatrix();
 }
 
 void update(int value) 
@@ -210,11 +192,7 @@ static void draw(void) {
     for (int i = 0; i < ants_size; i++) {
         draw_sphere(ants[i].pos, 0.40, ants[i].color);
     }
-    
-    char buffer[50];
-    sprintf(buffer, "Nombre d'iterations: %zu", iterations);
-    render_text(10, HEIGHT - 20, buffer);
-
+    draw_hud(*g_lem_in, iterations);
     glutSwapBuffers();
 }
 

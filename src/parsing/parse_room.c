@@ -22,8 +22,9 @@ static t_vector3 get_room_pos(char *line)
         return ((t_vector3){-1, -1, -1});
     }
 
-    pos.x = ft_atoi(split[1]);
-    pos.y = ft_atoi(split[2]);
+    pos.x = ft_atoi_lem_in(split[1]);
+    pos.y = ft_atoi_lem_in(split[2]);
+    printf("pos.x = %f, pos.y = %f\n", pos.x, pos.y);
     pos.z = generate_random_number(0, 0);
 
     ft_free_array(split);
@@ -39,6 +40,11 @@ static char *get_room_name(char *line)
     while (line[i] != ' ')
         i++;
     name = ft_substr(line, 0, i);
+    if (!name)
+    {
+        print_error(ERR_MALLOC);
+        return (NULL);
+    }
 
     return (name);
 }

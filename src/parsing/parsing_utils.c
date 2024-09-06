@@ -52,3 +52,34 @@ bool is_num(char *str)
     }
     return (true);
 }
+
+int	ft_atoi_lem_in(const char *str)
+{
+	int			i;
+	long long	x;
+	int			sign;
+
+	i = 0;
+	x = 0;
+	sign = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == ' '))
+		i++;
+	if (str[i] == '-')
+	{
+		sign *= -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (x != (((x * 10) + (str[i] - 48)) / 10))
+			return (((sign + 1) / -2));
+		x = (str[i] - 48) + (x * 10);
+		i++;
+	}
+	x = x * sign;
+	if (x > INT_MAX || x < INT_MIN)
+        return (((sign + 1) / -2));
+	return ((int)x);
+}

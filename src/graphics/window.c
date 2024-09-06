@@ -41,13 +41,16 @@ void set_paused()
 }
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
+    (void)lem_in;
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
     size_t i = 0;
     while (i < size) {
-        t_room *room = &lem_in.rooms[links[i]];
+        t_room *room = NULL;//&lem_in.rooms[links[i]];
         if (!room) {
             printf("Room id %d not found\n", links[i]);
-            exit(1);
+            free(res);
+            free_global_vars();
+            exit(EXIT_FAILURE);
         }
         res[i] = (t_vector3){room->pos.x, room->pos.y, room->pos.z};
         i++;
@@ -282,6 +285,7 @@ static void free_global_vars()
         free(rooms[i].links);
         i++;
     }
+
     free(rooms);
     free(ants);
     free_lem_in(g_lem_in);

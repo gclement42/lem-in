@@ -1,12 +1,38 @@
 #include "lem_in.h"
 #include <math.h>
 
-t_sphere rooms[1000];//todo malloc this
-t_sphere ants[1000];
-t_lem_in *g_lem_in;
-int size = 0;
-int ants_size = 0;
-size_t iterations = 0;
+t_sphere    rooms[1000];//todo malloc this
+t_sphere    ants[1000];
+t_lem_in    *g_lem_in;
+int         size = 0;
+int         ants_size = 0;
+size_t      iterations = 0;
+bool        paused = false;
+
+t_sphere *get_ants() 
+{
+    return ants;
+}
+
+t_sphere *get_rooms() 
+{
+    return rooms;
+}
+
+int get_n_rooms() 
+{
+    return size;
+}
+
+int get_n_ants() 
+{
+    return ants_size;
+}
+
+void set_paused() 
+{
+    paused = !paused;
+}
 
 t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     t_vector3 *res = malloc(sizeof(t_vector3) * size);
@@ -23,6 +49,15 @@ t_vector3 *get_links(t_lem_in lem_in, int *links, size_t size) {
     return res;
 }
 
+t_color interpolate_color(t_color color1, t_color color2, float factor) {
+    t_color result;
+    result.r = color1.r + factor * (color2.r - color1.r);
+    result.g = color1.g + factor * (color2.g - color1.g);
+    result.b = color1.b + factor * (color2.b - color1.b);
+    result.o = color1.o + factor * (color2.o - color1.o);
+    return result;
+}
+
 void init_rooms(t_lem_in lem_in) {
     int i;
 
@@ -35,7 +70,7 @@ void init_rooms(t_lem_in lem_in) {
         else if (i == lem_in.start)
             rooms[i].color = (t_color){0.0, 1.0, 0.0, 1.0};
         else
-            rooms[i].color = (t_color){1.0, 1.0, 1.0, 1.0};
+            rooms[i].color = interpolate_color((t_color){1.0, 1.0, 1.0, 1.0}, (t_color){1.0, 1.0, 0.0, 1.0}, lem_in.rooms[i].cost / (float)lem_in.n_rooms);
         rooms[i].links_size = get_links_size(lem_in.rooms[i].links);
         rooms[i].links = get_links(lem_in, lem_in.rooms[i].links, rooms[i].links_size);
     }
@@ -66,12 +101,17 @@ void update(int value)
 {
     float   speed;
     int     count = 0;
+
+    if (paused) {
+        glutTimerFunc(value, update, value);
+        return;
+    }
     for (int i = 0; i < ants_size; i++)
     {
         t_room room = *g_lem_in->ants[i].room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-        speed = length / 15;
+        speed = length / 25;
         if (length > 0.1f)
         {
             ants[i].pos.x += dir.x / length * speed;
@@ -129,7 +169,9 @@ static void draw(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    t_camera camera = get_camera();
+    t_camera camera = *get_camera();
+    if (camera.locked_on_ant)
+        follow_ant();
     gluLookAt(
         camera.eye.x, camera.eye.y, camera.eye.z,
         camera.center.x, camera.center.y, camera.center.z,
@@ -147,13 +189,13 @@ static void draw(void) {
         }
     }
 
-    // printf("Ants size: %d\n", ants_size);
     for (int i = 0; i < ants_size; i++) {
-        // printf("Ant %d is in room %s\n", g_lem_in->ants[i].id, g_lem_in->ants[i].room->name);
         draw_sphere(ants[i].pos, 0.40, ants[i].color);
     }
+    draw_hud(*g_lem_in, iterations);
     glutSwapBuffers();
 }
+
 
 void reshape(int largeur, int hauteur) {
     if (hauteur <= 0) hauteur = 1;
@@ -173,14 +215,14 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer =  0;
+    size_t timer =  1;
     g_lem_in = &lem_in;
     init_rooms(lem_in);
     init_ants_sphere(lem_in);
     setup_camera(rooms, size);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(1920, 1080);
+    glutInitWindowSize(WIDTH, HEIGHT);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Lem-in");
     glutKeyboardFunc(keyboard_listener);

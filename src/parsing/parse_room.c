@@ -1,14 +1,11 @@
 #include "lem_in.h"
 
-static int generate_random_number(int min, int max) {
-    return (rand() % (max - min + 1)) + min;
-}
-
-
 static t_vector3 get_room_pos(char *line)
 {
     t_vector3       pos;
     char            **split;
+    int             x;
+    int             y;
 
     split = ft_split(line, ' ');
     if (!split)
@@ -22,9 +19,11 @@ static t_vector3 get_room_pos(char *line)
         return ((t_vector3){-1, -1, -1});
     }
 
-    pos.x = ft_atoi_lem_in(split[1]);
-    pos.y = ft_atoi_lem_in(split[2]);
-    pos.z = generate_random_number(0, 0);
+    x = ft_atoi(split[1]);
+    y = ft_atoi(split[2]);
+    pos.x = x + generate_random_number(0, x / 2);
+    pos.y = y + generate_random_number(0, y / 2);
+    pos.z = generate_random_number(0, pos.x + pos.y);
 
     ft_free_array(split);
     return (pos);

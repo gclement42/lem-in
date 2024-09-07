@@ -8,8 +8,8 @@
 #include "lem_in.h"
 
 #define pi 3.14159265359
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 300
+#define HEIGHT 300
 
 typedef struct s_camera {
 	t_vector3 	center;

@@ -39,21 +39,20 @@ static void    move_ants(t_lem_in *lem_in)
     ft_printf("\n");
 }
 
-// static void display_all_links(t_room *room, t_room **rooms_linked)
-// {
-//     size_t      i;
-//     size_t      links_len;
+static void display_all_links(t_room *room, t_room **rooms_linked)
+{
+    size_t      i;
+    size_t      links_len;
 
-//     i = 0;
-//     links_len = get_links_size(room->links);
-//     ft_printf("Room %s is linked to: \n", room->name);
-//     while (i < links_len)
-//     {
-//         ft_printf(" %s: %d\n", rooms_linked[i]->name, rooms_linked[i]->cost);
-//         i++;
-//     }
-//     ft_printf("\n-----------------\n");
-// }
+    i = 0;
+    links_len = get_links_size(room->links);
+    ft_printf("Room %s is linked to: \n", room->name);
+    while (i < links_len)
+    {
+        ft_printf(" %s: %d\n", rooms_linked[i]->name, rooms_linked[i]->cost);
+        i++;
+    }
+}
 
 static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
 {
@@ -68,11 +67,11 @@ static t_room   *get_next_room(t_lem_in *lem_in, t_room *room)
     }
     links_len = get_links_size(room->links);
     rooms_linked = get_most_valuable_room(lem_in, room->links);
-    // display_all_links(room, rooms_linked);
-    while (i < links_len && i < 3)
+    display_all_links(room, rooms_linked);
+    while (i < links_len)
     {
         next_room = rooms_linked[i];
-        if ((next_room->is_empty == true && next_room->cost != -1) || next_room->id == lem_in->end)
+        if ((next_room->is_empty == true && next_room->cost > 0 && next_room->cost > room->cost) || next_room->id == lem_in->end)
         {
             free(rooms_linked);
             return (next_room);
@@ -127,5 +126,6 @@ static void   sort_by_cost(t_room **rooms, size_t size)
 
 static void write_ant_move(int ant_id, char *room_name)
 {
-    ft_printf("L%d-%s ", ant_id, room_name);
+    ft_printf("L%d-%s\n", ant_id, room_name);
+        ft_printf("\n-----------------\n");
 }

@@ -120,7 +120,7 @@ void update(int value)
         t_room room = *g_lem_in->ants[i].room;
         t_vector3 dir = {room.pos.x - ants[i].pos.x, room.pos.y - ants[i].pos.y, room.pos.z - ants[i].pos.z};
         float length = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-        speed = length / 25;
+        speed = length / 5;
         if (length > 0.1f)
         {
             ants[i].pos.x += dir.x / length * speed;
@@ -133,12 +133,12 @@ void update(int value)
         }
     }
     if (count == ants_size) {
+        iterations++;
         if (check_if_all_ants_in_end(g_lem_in)) {
             // printf("All ants are in end with %ld iterations\n", iterations);
             return;
         }
         move_ants_manager(g_lem_in);
-        iterations++;
     }
     glutTimerFunc(value, update, value);
 }
@@ -224,7 +224,7 @@ void idle(void) {
 }
 
 void init_window(int argc, char **argv, t_lem_in lem_in) {
-    size_t timer = 0;
+    size_t timer = 1;
     g_lem_in = &lem_in;
 
     malloc_rooms_and_ants(lem_in.n_ants, lem_in.n_rooms);
@@ -257,9 +257,9 @@ static void keyboard_listener(unsigned char key, int x, int y) {
     (void)y;
 
     if (key == 27) {
-        esc_is_pressed = true;
-        free_global_vars();
-        exit(EXIT_SUCCESS);
+        // esc_is_pressed = true;
+        // free_global_vars();
+        exit(1);
     }
     if (key == 32)
         lock_camera_on_ant();
